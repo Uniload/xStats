@@ -148,3 +148,4 @@ defaultproperties
 	bCompatibilityMode=False
 	sniperProjectileDamageType = Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
 	energyBladeProjectileDamageType = Class'promod_v1rc7_b3.promodBladeProjectileDamageType'
+}

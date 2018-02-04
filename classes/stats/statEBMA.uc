@@ -3,7 +3,7 @@ Class statEBMA extends xsExtendedStat config(xStats);
 //E-Blade Knife Midair stat
 defaultproperties
 {
-     minTargetAltitude=0
+     minTargetAltitude=200
      minDamage=1.000000
      stylePointsPerStat=1
      logLevel=3
