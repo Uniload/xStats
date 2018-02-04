@@ -9,6 +9,7 @@ const VERSION_NAME = "xStats_b1";
 
 var config bool bCompatibilityMode;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> sniperProjectileDamageType;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> energyBladeProjectileDamageType;
 
 simulated event PreBeginPlay()
 {
@@ -112,7 +113,11 @@ simulated function ModifyStats()
 		++statCount;
 		
 		// E-Blade
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeDefault';
+		if (bCompatibilityMode) {
+			M.extendedProjectileDamageStats[statCount].damageTypeClass = energyBladeProjectileDamageType;
+		} else {
+			M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeDefault';
+		}
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEBMA';
 		++statCount;
 		
@@ -142,3 +147,4 @@ defaultproperties
 {
 	bCompatibilityMode=False
 	sniperProjectileDamageType = Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
+	energyBladeProjectileDamageType = Class'promod_v1rc7_b3.promodBladeProjectileDamageType'
