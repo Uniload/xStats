@@ -8,6 +8,7 @@ class main extends Gameplay.Mutator config(xStats);
 const VERSION_NAME = "xStats_b1";
 
 var config bool bCompatibilityMode;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> sniperProjectileDamageType;
 
 simulated event PreBeginPlay()
 {
@@ -20,14 +21,21 @@ simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
 	
+	ServerSaveConfig();
+	
 	//No idea how to spawn for client only
 	spawn(class'xStats.ClientStats');
 	
 	
 	if (Level.NetMode != NM_Client)	{
-		log("xStats: Running in server mode);
+		log("xStats: Running in server mode");
 		spawn(class'xStats.ServerSettings');
 	}
+}
+
+function ServerSaveConfig()
+{
+	SaveConfig();
 }
 
 simulated function ModifyStats()
@@ -39,23 +47,20 @@ simulated function ModifyStats()
 
 	if(M != None)
 	{
-         // search for the weapon stat and set it's extended stat
 		for(i = 0; i < M.extendedProjectileDamageStats.Length; ++i)
 		{
-			// find by damageType
+			// Set Extended stat to SMA
 			if(M.extendedProjectileDamageStats[i].damageTypeClass == Class'EquipmentClasses.ProjectileDamageTypeSpinfusor')
 			{
 				M.extendedProjectileDamageStats[i].extendedStatClass = Class'statMA';
-				log("MA stat modified");
 			}		
 		}
 		for(i = 0; i < M.projectileDamageStats.Length; ++i)
 		{
-			// find by damageType
+			// Remove default HS
 			if(M.projectileDamageStats[i].damageTypeClass == Class'EquipmentClasses.ProjectileDamageTypeSniperRifle')
 			{
 				M.projectileDamageStats.Remove(i, 1);
-				log("HS stat removed");
 			}
 		}
 
@@ -66,7 +71,11 @@ simulated function ModifyStats()
 		M.projectileDamageStats.Insert(statCount, 1);
 
 		// Head Shot
-        M.projectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSniperRifle';
+		if (bCompatibilityMode) {
+			M.projectileDamageStats[statCount].damageTypeClass = sniperProjectileDamageType;
+		} else {
+			M.projectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSniperRifle';
+		}
 		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
 		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats.xsExtendedStat';
 		++statCount;		
@@ -132,4 +141,4 @@ simulated function ModifyStats()
 defaultproperties
 {
 	bCompatibilityMode=False
-}
+	sniperProjectileDamageType = Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
