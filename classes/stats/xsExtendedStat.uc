@@ -55,7 +55,7 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 		PC = PlayerController(Source);
 		if (PC != None)
 		{
-			PC.ReceiveLocalizedMessage(class'xStats.statDistance'.default.personalMessageClass, 0, class'xStats.statDistance',,, string(relativeDistance));
+			PC.ReceiveLocalizedMessage(class'xStats.statDistance'.default.personalMessageClass, 0, class'xStats.statDistance',,, string(relativeDistance*0.0125));
 		}
 	}
 	return true;

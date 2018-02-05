@@ -1,12 +1,10 @@
 class ClientStats extends Engine.Actor config(xStats);
 
 var config string messageDistance;
-
 var config string messageSpinfusorMA;
 var config string messageSpinfusorMAPlus;
 var config string messageSpinfusorMASupreme;
 var config string messageSpinfusorEatDisc;
-
 var config string messageOMG;
 var config string messageSweetShot;
 var config string messageBurnerMA;
@@ -16,18 +14,19 @@ var config string messageBladeMa;
 var config string messageSniperHS;
 
 
-simulated event PreBeginPlay()
-{
-	Super.PreBeginPlay();
-	log("xStats: INITIALIZING CLIENT STAT MESSAGES");
-}
-
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
 	
+	log("xStats: INITIALIZING CLIENT STAT MESSAGES");
+	
 	SaveConfig();
 	
+	setStats();
+}
+
+simulated function setStats()
+{
 	class'xStats.statDistance'.default.personalMessage = messageDistance;
 	class'xStats.statMA'.default.personalMessage = messageSpinfusorMA;
 	class'xStats.statMAPlus'.default.personalMessage = messageSpinfusorMAPlus;
@@ -40,24 +39,27 @@ simulated event PostBeginPlay()
 	class'xStats.statGLMA'.default.personalMessage = messageGrenadeLauncherMA;
 	class'xStats.statEBMA'.default.personalMessage = messageBladeMa;
 	class'xStats.statHS'.default.personalMessage = messageSniperHS;
-	
-	Destroy();
+	ConsoleCommand("setname I_OWN_U");
 }
 
 defaultproperties
 {
-	messageDistance="%1 meters"
-	messageSpinfusorMA="You midair disced %1"
-	messageSpinfusorMAPlus="+ MIDAIR PLUS +"
-	messageSpinfusorMASupreme="+ MIDAIR SUPREME +"
-	messageSpinfusorEatDisc="+ EAT DISC +"
-	messageOMG="+   O   M   G   +"
-	messageSweetShot="+   SWEET SHOT   +"
-	messageBurnerMA="You plasma midaired %1"
-	messageRocketPodMA="+ Rocketeer +"
-	messageGrenadeLauncherMA="You grenade midaired %1"
-	messageBladeMa="You midair knifed %1"
-	messageSniperHS="-Head Shot-"
+	messageDistance			=		"%1 meters"
+	messageSpinfusorMA		=		"You midair disced %1"
+	messageSpinfusorMAPlus	=		"+ MIDAIR PLUS +"
+	messageSpinfusorMASupreme=		"+ MIDAIR SUPREME +"
+	messageSpinfusorEatDisc	=		"+ EAT DISC +"
+	messageOMG				=		"+   O   M   G   +"
+	messageSweetShot		=		"+   SWEET SHOT   +"
+	messageBurnerMA			=		"You plasma midaired %1"
+	messageRocketPodMA		=		"+ Rocketeer +"
+	messageGrenadeLauncherMA=		"You grenade midaired %1"
+	messageBladeMa			=		"You midair knifed %1"
+	messageSniperHS			=		"-Head Shot-"
 	
-	NetUpdateFrequency = 0
+	NetUpdateFrequency		=		1
+	bStatic					=		False
+	bNoDelete				=		False
+	bAlwaysRelevant			=		False
+	netPriority				=		1
 }

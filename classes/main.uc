@@ -7,6 +7,9 @@ class main extends Gameplay.Mutator config(xStats);
 
 const VERSION_NAME = "xStats_b1";
 
+var Actor clientStatsClass;
+var Actor serverSettingsClass;
+
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MAp_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MApp_PDT;
@@ -21,11 +24,10 @@ var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_PMA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_RPMA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_DistancePDT;
 
-// ======================================================================================================= 
-
-simulated event PreBeginPlay()
+replication
 {
-	Super.PreBeginPlay();
+    reliable if (bNetInitial)
+        clientStatsClass;
 }
 
 simulated event PostBeginPlay()
@@ -34,12 +36,8 @@ simulated event PostBeginPlay()
 	
 	ServerSaveConfig();
 	
-	spawn(class'xStats.ClientStats');
-	
-	if (Level.NetMode != NM_Client)	{
-		log("xStats: Running in server mode");
-		spawn(class'xStats.ServerSettings');
-	}
+	clientStatsClass = spawn(class'xStats.ClientStats');
+	serverSettingsClass = spawn(class'xStats.ServerSettings');
 	
 	ModifyStats();
 }
@@ -49,7 +47,7 @@ function ServerSaveConfig()
 	SaveConfig();
 }
 
-simulated function ModifyStats()
+function ModifyStats()
 {
 	local ModeInfo M;
 	local int i, statCount;
@@ -94,6 +92,7 @@ simulated function ModifyStats()
 		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new stats
 		
 		// statDISTANCE		Its only purpose here is to be registered and shown at endgame. "Longest midair:  xxx"
+		//					Need to find a way to modify/replace ModeInfo for this to work...
 		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_DistancePDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
 		++statCount;
@@ -165,4 +164,7 @@ defaultproperties
 	stat_PMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeBurner'
 	stat_RPMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeRocketPod'
 	stat_DistancePDT= 		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	
+	clientStatsClass	= None
+	serverSettingsClass	= None
 }
