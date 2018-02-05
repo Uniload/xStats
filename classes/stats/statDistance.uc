@@ -2,6 +2,7 @@ Class statDistance extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	showDistance=False
 	minTargetAltitude=200
 	minDistance=0
 	MaxDistance=99000
@@ -12,5 +13,5 @@ defaultproperties
 	Description="Longest midair"
 	awardDescription="Longest midair"
 	personalMessage="%1 units"
-	PersonalMessageClass=Class'StatClasses.MPPersonalStatMessageDefault'
+	PersonalMessageClass=Class'xStats.xsDistanceStatMessage'
 }

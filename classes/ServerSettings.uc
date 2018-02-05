@@ -14,4 +14,5 @@ event PostBeginPlay()
 
 defaultproperties
 {
+	NetUpdateFrequency = 0
 }

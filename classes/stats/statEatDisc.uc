@@ -1,15 +1,14 @@
 Class statEatDisc extends xsExtendedStat config(xStats);
 
-// MA Ultra Long Range stat
-
 defaultproperties
 {
+	showDistance=True
 	minTargetAltitude=200
 	minDistance=12000
 	MaxDistance=30000
 	minDamage=44.000000
 	stylePointsPerStat=2
-	logLevel=3
+	logLevel=2
 	Acronym="ED"
 	Description="Eat discs"
 	awardDescription="Most eat discs"

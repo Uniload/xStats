@@ -1,13 +1,11 @@
 Class statMMA extends Gameplay.ExtendedStat;
 
-// Mortar MA stat
-
 defaultproperties
 {
      minTargetAltitude=800
      minDamage=115.000000
      stylePointsPerStat=4
-     logLevel=3
+     logLevel=2
      Acronym="MMA"
      Description="Mortar midair"
      awardDescription="Most mortar midairs"

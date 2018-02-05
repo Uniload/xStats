@@ -1,5 +1,7 @@
 class ClientStats extends Engine.Actor config(xStats);
 
+var config string messageDistance;
+
 var config string messageSpinfusorMA;
 var config string messageSpinfusorMAPlus;
 var config string messageSpinfusorMASupreme;
@@ -17,6 +19,7 @@ var config string messageSniperHS;
 simulated event PreBeginPlay()
 {
 	Super.PreBeginPlay();
+	log("xStats: INITIALIZING CLIENT STAT MESSAGES");
 }
 
 simulated event PostBeginPlay()
@@ -25,6 +28,7 @@ simulated event PostBeginPlay()
 	
 	SaveConfig();
 	
+	class'xStats.statDistance'.default.personalMessage = messageDistance;
 	class'xStats.statMA'.default.personalMessage = messageSpinfusorMA;
 	class'xStats.statMAPlus'.default.personalMessage = messageSpinfusorMAPlus;
 	class'xStats.statMASupreme'.default.personalMessage = messageSpinfusorMASupreme;
@@ -42,6 +46,7 @@ simulated event PostBeginPlay()
 
 defaultproperties
 {
+	messageDistance="%1 meters"
 	messageSpinfusorMA="You midair disced %1"
 	messageSpinfusorMAPlus="+ MIDAIR PLUS +"
 	messageSpinfusorMASupreme="+ MIDAIR SUPREME +"

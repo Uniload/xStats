@@ -7,7 +7,7 @@ defaultproperties
 	MaxDistance=12000
 	minDamage=44.000000
 	stylePointsPerStat=1
-	logLevel=3
+	logLevel=2
 	Acronym="MA"
 	Description="Midair discs"
 	awardDescription="Most midair discs"

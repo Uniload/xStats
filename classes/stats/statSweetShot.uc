@@ -1,7 +1,5 @@
 Class statSweetShot extends xsExtendedStat config(xStats);
 
-// Sweet shot stat
-
 defaultproperties
 {
 	minTargetAltitude=0
@@ -10,7 +8,7 @@ defaultproperties
 	minTargetSpeed=200
 	minDamage=44.000000
 	stylePointsPerStat=2
-	logLevel=3
+	logLevel=2
 	Acronym="SS"
 	Description="Sweet shots"
 	awardDescription="Most sweet shots"

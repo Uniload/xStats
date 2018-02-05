@@ -7,15 +7,25 @@ class main extends Gameplay.Mutator config(xStats);
 
 const VERSION_NAME = "xStats_b1";
 
-var config bool bCompatibilityMode;
-var config class<EquipmentClasses.ProjectileDamageTypeDefault> sniperProjectileDamageType;
-var config class<EquipmentClasses.ProjectileDamageTypeDefault> energyBladeProjectileDamageType;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MA_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MAp_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MApp_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_ED_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_HS_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_EBMA_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_GLMA_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_OMG_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MMA_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_SS_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_PMA_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_RPMA_PDT;
+var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_DistancePDT;
+
+// ======================================================================================================= 
 
 simulated event PreBeginPlay()
 {
 	Super.PreBeginPlay();
-	
-	ModifyStats();
 }
 
 simulated event PostBeginPlay()
@@ -24,14 +34,14 @@ simulated event PostBeginPlay()
 	
 	ServerSaveConfig();
 	
-	//No idea how to spawn for client only
 	spawn(class'xStats.ClientStats');
-	
 	
 	if (Level.NetMode != NM_Client)	{
 		log("xStats: Running in server mode");
 		spawn(class'xStats.ServerSettings');
 	}
+	
+	ModifyStats();
 }
 
 function ServerSaveConfig()
@@ -50,8 +60,8 @@ simulated function ModifyStats()
 	{
 		for(i = 0; i < M.extendedProjectileDamageStats.Length; ++i)
 		{
-			// Set Extended stat to SMA
-			if(M.extendedProjectileDamageStats[i].damageTypeClass == Class'EquipmentClasses.ProjectileDamageTypeSpinfusor')
+			// Set Extended stat to MA
+			if(M.extendedProjectileDamageStats[i].damageTypeClass == stat_MA_PDT)
 			{
 				M.extendedProjectileDamageStats[i].extendedStatClass = Class'statMA';
 			}		
@@ -72,11 +82,7 @@ simulated function ModifyStats()
 		M.projectileDamageStats.Insert(statCount, 1);
 
 		// Head Shot
-		if (bCompatibilityMode) {
-			M.projectileDamageStats[statCount].damageTypeClass = sniperProjectileDamageType;
-		} else {
-			M.projectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSniperRifle';
-		}
+		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
 		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
 		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats.xsExtendedStat';
 		++statCount;		
@@ -87,62 +93,58 @@ simulated function ModifyStats()
 		
 		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new stats
 		
-		// statDISTANCE
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSpinfusor';
+		// statDISTANCE		Its only purpose here is to be registered and shown at endgame. "Longest midair:  xxx"
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_DistancePDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
 		++statCount;
 		
 		// statMAPlus
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSpinfusor';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_MAp_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statMAPlus';
 		++statCount;
 		
 		// statMASupreme
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSpinfusor';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_MApp_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statMASupreme';
 		++statCount;
 		
 		// statEatDisc
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSpinfusor';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_ED_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEatDisc';
 		++statCount;
 		
 		// statOMG
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeExplosion';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_OMG_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statOMG';
 		++statCount;
 		
 		// PMA
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeBurner';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_PMA_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statPMA';
 		++statCount;
 		
 		// E-Blade
-		if (bCompatibilityMode) {
-			M.extendedProjectileDamageStats[statCount].damageTypeClass = energyBladeProjectileDamageType;
-		} else {
-			M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeDefault';
-		}
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_EBMA_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEBMA';
 		++statCount;
 		
 		// statRocketeer
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeRocketPod';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_RPMA_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statRocketeer';
 		++statCount;
 		
 		// GLMA
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_GLMA_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statGLMA';
 		++statCount;
 
 		// MMA
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeMortar';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_MMA_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statMMA';
 		++statCount;
 		
 		// statSweetShot
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeExplosion';
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_SS_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statSweetShot';
 		++statCount;
 	}
@@ -150,7 +152,17 @@ simulated function ModifyStats()
 
 defaultproperties
 {
-	bCompatibilityMode=False
-	sniperProjectileDamageType = Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
-	energyBladeProjectileDamageType = Class'promod_v1rc7_b3.promodBladeProjectileDamageType'
+	stat_MA_PDT 	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_MAp_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_MApp_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_ED_PDT 	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_HS_PDT		=		Class'EquipmentClasses.ProjectileDamageTypeSniperRifle'
+	stat_EBMA_PDT	=		Class'Gameplay.ProjectileDamageType'
+	stat_GLMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
+	stat_MMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
+	stat_OMG_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeExplosion'
+	stat_SS_PDT		=		Class'EquipmentClasses.ProjectileDamageTypeExplosion'
+	stat_PMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeBurner'
+	stat_RPMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeRocketPod'
+	stat_DistancePDT= 		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 }
