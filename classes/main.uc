@@ -85,7 +85,12 @@ simulated function ModifyStats()
 
 		statCount = M.extendedProjectileDamageStats.Length;
 		
-		M.extendedProjectileDamageStats.Insert(statCount, 10); // we have 10 new stats
+		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new stats
+		
+		// statDISTANCE
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSpinfusor';
+		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
+		++statCount;
 		
 		// statMAPlus
 		M.extendedProjectileDamageStats[statCount].damageTypeClass = Class'EquipmentClasses.ProjectileDamageTypeSpinfusor';

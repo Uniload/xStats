@@ -1,12 +1,11 @@
 class xsExtendedStat extends Gameplay.ExtendedStat;
 
-var int distance;
-
-static simulated function bool isEligible(Controller Source, Controller Target, float damageAmount)
+static function bool isEligible(Controller Source, Controller Target, float damageAmount)
 {
 	local vector hitLocation, hitNormal, startTrace, endTrace;
 	local int relativeDistance;
 	local Character targetCharacter;
+	local PlayerController pc;
 	local PlayerCharacterController pcc;
 
 	if (Target == None || Source == None)
@@ -48,14 +47,17 @@ static simulated function bool isEligible(Controller Source, Controller Target, 
 
 	// If this point is reached, all tests passed and the stat is awarded
 	
-	/** this class is static...
-	distance = relativeDistance;
-	*/
-	log(relativeDistance);
+	// CUSTOM DISTANCE STAT
+	pc = PlayerController(Source);
+	if (pc != None)
+	{
+		log(string(relativeDistance));
+		PC.ReceiveLocalizedMessage(class'xStats.statDistance'.default.personalMessageClass, 0, class'xStats.statDistance', target.playerReplicationInfo,,string(relativeDistance));
+	}
+	
 	return true;
 }
 
 defaultproperties
 {
-	distance=-1
 }
