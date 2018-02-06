@@ -8,7 +8,7 @@ defaultproperties
 	MaxDistance=99000
 	minDamage=1.000000
 	stylePointsPerStat=0
-	logLevel=3
+	logLevel=2
 	Acronym="DMA"
 	Description="Longest midair"
 	awardDescription="Longest midair"

@@ -4,9 +4,9 @@ defaultproperties
 {
 	showDistance=True
 	minTargetAltitude=200
-	minDistance=12000
+	minDistance=000
 	MaxDistance=30000
-	minDamage=44.000000
+	minDamage=1.000000
 	stylePointsPerStat=2
 	logLevel=2
 	Acronym="ED"

@@ -7,7 +7,7 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 	local vector hitLocation, hitNormal, startTrace, endTrace;
 	local int relativeDistance;
 	local Character targetCharacter;
-	local PlayerController pc;
+	//local PlayerController pc;
 	local PlayerCharacterController pcc;
 
 	if (Target == None || Source == None)
@@ -49,8 +49,13 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 		
 	// If this point is reached, all tests passed and the stat is awarded
 	
-	// CUSTOM DISTANCE STAT
-	if (/* DISABLE FOR TESTING */ False && default.showDistance)
+	return true;
+}
+
+/*
+
+// CUSTOM DISTANCE STAT
+	if (False && default.showDistance)
 	{
 		PC = PlayerController(Source);
 		if (PC != None)
@@ -58,8 +63,8 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 			PC.ReceiveLocalizedMessage(class'xStats.statDistance'.default.personalMessageClass, 0, class'xStats.statDistance',,, string(relativeDistance*0.0125));
 		}
 	}
-	return true;
-}
+
+*/
 
 defaultproperties
 {

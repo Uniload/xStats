@@ -35,15 +35,14 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	{
 		value = 1;
 	}
-
-	log(s.class);
 	
-	if (s.class == class'xStats.statDistance')
+	log(s);
+	
+	if (s == class'xStats.statDistance')
 	{
 		if (target != None)
 		{
 			relativeDistance = VSize(C.Pawn.Location - Target.Pawn.Location);
-		
 			PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(relativeDistance*0.0125));
 		}
 	}

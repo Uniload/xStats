@@ -42,8 +42,7 @@ simulated event PostBeginPlay()
 	serverSettingsClass = spawn(class'xStats.StatSettings');
 	
 	ModifyStats();
-	
-	Timer();
+
 	SetTimer(StatTrackerSpawnDelay, False);
 }
 
@@ -157,13 +156,15 @@ function Timer()
 {	
 	// Replace default statTracker by swapping class . . .
 	local xStats.xsStatTracker xsst;
+	local Gameplay.StatTracker st;
 	
+	st = ModeInfo(Level.Game).Tracker;
 	xsst = Spawn(class'xStats.xsStatTracker');
-
-	ModeInfo(Level.Game).Tracker = xsst.copy(ModeInfo(Level.Game).Tracker);
+	xsst.copy(st);
 	
-
-	log(ModeInfo(Level.Game).Tracker.class == class'xStats.xsStatTracker');
+	ModeInfo(Level.Game).Tracker = xsst;
+	//check
+	log("xStats: StatTracker has been initialized");
 }
 
 defaultproperties

@@ -6,7 +6,7 @@ defaultproperties
 	minTargetAltitude=0
 	minDistance=0
 	MaxDistance=12000
-	minDamage=44.000000
+	minDamage=1.000000
 	stylePointsPerStat=1
 	logLevel=2
 	Acronym="MA"
