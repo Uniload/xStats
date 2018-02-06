@@ -17,11 +17,8 @@ var config string messageSniperHS;
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	
-	log("xStats: INITIALIZING CLIENT STAT MESSAGES");
-	
-	SaveConfig();
-	
+
+	SaveConfig();	
 	setStats();
 }
 
@@ -39,7 +36,6 @@ simulated function setStats()
 	class'xStats.statGLMA'.default.personalMessage = messageGrenadeLauncherMA;
 	class'xStats.statEBMA'.default.personalMessage = messageBladeMa;
 	class'xStats.statHS'.default.personalMessage = messageSniperHS;
-	ConsoleCommand("setname I_OWN_U");
 }
 
 defaultproperties

@@ -6,6 +6,7 @@ class main extends Gameplay.Mutator config(xStats);
 **/
 
 const VERSION_NAME = "xStats_b1";
+const int STAT_AMOUNT = 13;
 
 var Actor clientStatsClass;
 var Actor serverSettingsClass;
@@ -89,7 +90,7 @@ function ModifyStats()
 
 		statCount = M.extendedProjectileDamageStats.Length;
 		
-		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new stats
+		M.extendedProjectileDamageStats.Insert(statCount, (STAT_AMOUNT-2) ); // we have 11 new stats
 		
 		// statDISTANCE		Its only purpose here is to be registered and shown at endgame. "Longest midair:  xxx"
 		//					Need to find a way to modify/replace ModeInfo for this to work...
