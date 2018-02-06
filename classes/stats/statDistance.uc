@@ -2,8 +2,8 @@ Class statDistance extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
-	showDistance=False
-	minTargetAltitude=200
+	showDistance=True
+	minTargetAltitude=0
 	minDistance=0
 	MaxDistance=99000
 	minDamage=1.000000

@@ -7,6 +7,8 @@ class main extends Gameplay.Mutator config(xStats);
 
 const VERSION_NAME = "xStats_b1";
 
+var int StatTrackerSpawnDelay;
+
 var Actor clientStatsClass;
 var Actor serverSettingsClass;
 
@@ -30,13 +32,6 @@ replication
         clientStatsClass;
 }
 
-simulated event PreBeginPlay()
-{
-	ModeInfo(Level.Game).Tracker = spawn(class'xStats.xsStatTracker');
-	//Need to reinitialise tracker by calling Level.Game.PBP
-	Level.Game.PostBeginPlay();
-}
-
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
@@ -47,6 +42,9 @@ simulated event PostBeginPlay()
 	serverSettingsClass = spawn(class'xStats.StatSettings');
 	
 	ModifyStats();
+	
+	Timer();
+	SetTimer(StatTrackerSpawnDelay, False);
 }
 
 function ServerSaveConfig()
@@ -84,22 +82,21 @@ function ModifyStats()
 
 		statCount = M.projectileDamageStats.Length;
 		
-		M.projectileDamageStats.Insert(statCount, 1);
+		M.projectileDamageStats.Insert(statCount, 1);	// we have 1 new stats
 
 		// Head Shot
 		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
 		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
-		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats.xsExtendedStat';
+		//Useless?? M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats.xsExtendedStat';
 		++statCount;		
 		
                 // ### EXTENDED DAMAGE STATS ###
 
 		statCount = M.extendedProjectileDamageStats.Length;
 		
-		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new stats
+		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new extended stats
 		
-		// statDISTANCE		Its only purpose here is to be registered and shown at endgame. "Longest midair:  xxx"
-		//					Need to find a way to modify/replace ModeInfo for this to work...
+		// statDISTANCE
 		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_DistancePDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
 		++statCount;
@@ -156,6 +153,19 @@ function ModifyStats()
 	}
 }
 
+function Timer()
+{	
+	// Replace default statTracker by swapping class . . .
+	local xStats.xsStatTracker xsst;
+	
+	xsst = Spawn(class'xStats.xsStatTracker');
+
+	ModeInfo(Level.Game).Tracker = xsst.copy(ModeInfo(Level.Game).Tracker);
+	
+
+	log(ModeInfo(Level.Game).Tracker.class == class'xStats.xsStatTracker');
+}
+
 defaultproperties
 {
 	stat_MA_PDT 	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
@@ -174,4 +184,6 @@ defaultproperties
 	
 	clientStatsClass	= None
 	serverSettingsClass	= None
+	
+	StatTrackerSpawnDelay	=	5
 }

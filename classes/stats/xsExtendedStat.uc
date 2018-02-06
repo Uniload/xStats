@@ -46,11 +46,11 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 	// Maximum target speed check
 	if (default.maxTargetSpeed != 0 && targetCharacter.movementSpeed >= default.maxTargetSpeed)
 		return false;
-
+		
 	// If this point is reached, all tests passed and the stat is awarded
 	
 	// CUSTOM DISTANCE STAT
-	if (default.showDistance)
+	if (/* DISABLE FOR TESTING */ False && default.showDistance)
 	{
 		PC = PlayerController(Source);
 		if (PC != None)
