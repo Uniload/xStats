@@ -16,7 +16,7 @@ struct statProperties
 	var config string 					awardDescription;
 	var config string 					personalMessage;
 	var config class<MPPersonalMessage> PersonalMessageClass;
-}
+};
 
 var config array<statProperties> xStatsList;
 

@@ -6,7 +6,6 @@ class main extends Gameplay.Mutator config(xStats);
 **/
 
 const VERSION_NAME = "xStats_b1";
-const int STAT_AMOUNT = 13;
 
 var Actor clientStatsClass;
 var Actor serverSettingsClass;
@@ -31,6 +30,13 @@ replication
         clientStatsClass;
 }
 
+simulated event PreBeginPlay()
+{
+	ModeInfo(Level.Game).Tracker = spawn(class'xStats.xStatTracker');
+	//Need to reinitialise tracker by calling Level.Game.PBP
+	Level.Game.PostBeginPlay();
+}
+
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
@@ -38,7 +44,7 @@ simulated event PostBeginPlay()
 	ServerSaveConfig();
 	
 	clientStatsClass = spawn(class'xStats.ClientStats');
-	serverSettingsClass = spawn(class'xStats.ServerSettings');
+	serverSettingsClass = spawn(class'xStats.StatSettings');
 	
 	ModifyStats();
 }
@@ -53,7 +59,6 @@ function ModifyStats()
 	local ModeInfo M;
 	local int i, statCount;
 
-	// HERE
 	M = ModeInfo(Level.Game);
 
 	if(M != None)
@@ -91,7 +96,7 @@ function ModifyStats()
 
 		statCount = M.extendedProjectileDamageStats.Length;
 		
-		M.extendedProjectileDamageStats.Insert(statCount, (STAT_AMOUNT-2) ); // we have 11 new stats
+		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new stats
 		
 		// statDISTANCE		Its only purpose here is to be registered and shown at endgame. "Longest midair:  xxx"
 		//					Need to find a way to modify/replace ModeInfo for this to work...
