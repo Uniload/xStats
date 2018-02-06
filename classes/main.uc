@@ -53,6 +53,7 @@ function ModifyStats()
 	local ModeInfo M;
 	local int i, statCount;
 
+	// HERE
 	M = ModeInfo(Level.Game);
 
 	if(M != None)
