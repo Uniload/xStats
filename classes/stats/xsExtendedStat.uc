@@ -52,20 +52,6 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 	return true;
 }
 
-/*
-
-// CUSTOM DISTANCE STAT
-	if (False && default.showDistance)
-	{
-		PC = PlayerController(Source);
-		if (PC != None)
-		{
-			PC.ReceiveLocalizedMessage(class'xStats.statDistance'.default.personalMessageClass, 0, class'xStats.statDistance',,, string(relativeDistance*0.0125));
-		}
-	}
-
-*/
-
 defaultproperties
 {
 	showDistance = False

@@ -29,23 +29,20 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		return;
 	if (s.default.logLevel > globalLogLevel)
 		return;
-
-	// Increase amount by 1 if no value was supplied
-	if (value <= 0)
-	{
-		value = 1;
-	}
-	
-	log(s);
 	
 	if (s == class'xStats.statDistance')
 	{
 		if (target != None)
 		{
 			relativeDistance = VSize(C.Pawn.Location - Target.Pawn.Location);
-			PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(relativeDistance*0.0125));
+			value = (relativeDistance*0.0125);
 		}
+	} else if (value <= 0)
+	{
+		value = 1;
 	}
+	
+	log(s);
 	
 	// Send personal message if applicable
 	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)

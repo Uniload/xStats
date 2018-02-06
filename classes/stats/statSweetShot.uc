@@ -3,10 +3,10 @@ Class statSweetShot extends xsExtendedStat config(xStats);
 defaultproperties
 {
 	minTargetAltitude=0
-	minDistance=5000
+	minDistance=0
 	MaxDistance=0
-	minTargetSpeed=200
-	minDamage=44.000000
+	minTargetSpeed=0
+	minDamage=1.000000
 	stylePointsPerStat=2
 	logLevel=2
 	Acronym="SS"

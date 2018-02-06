@@ -9,8 +9,8 @@ const VERSION_NAME = "xStats_b1";
 
 var int StatTrackerSpawnDelay;
 
-var Actor clientStatsClass;
-var Actor serverSettingsClass;
+var private Actor clientStatsClass;
+var private Actor serverSettingsClass;
 
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MAp_PDT;
@@ -19,12 +19,12 @@ var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_ED_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_HS_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_EBMA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_GLMA_PDT;
-var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_OMG_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MMA_PDT;
-var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_SS_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_PMA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_RPMA_PDT;
-var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_DistancePDT;
+var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_SS_PDT_LIST;
+var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_OMG_PDT_LIST;
+var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_Distance_PDT_LIST;
 
 replication
 {
@@ -38,12 +38,24 @@ simulated event PostBeginPlay()
 	
 	ServerSaveConfig();
 	
+	
 	clientStatsClass = spawn(class'xStats.ClientStats');
 	serverSettingsClass = spawn(class'xStats.StatSettings');
 	
 	ModifyStats();
 
 	SetTimer(StatTrackerSpawnDelay, False);
+}
+
+private function int calculateExtendedStatsAmount()
+{
+	local int amt;
+	amt += 10;
+	amt += stat_SS_PDT_LIST.Length;
+	amt += stat_OMG_PDT_LIST.Length;
+	amt += stat_Distance_PDT_LIST.Length;
+	log("LENGTH OF EXTENDED::::::" @ amt);
+	return amt;
 }
 
 function ServerSaveConfig()
@@ -93,12 +105,7 @@ function ModifyStats()
 
 		statCount = M.extendedProjectileDamageStats.Length;
 		
-		M.extendedProjectileDamageStats.Insert(statCount, 11); // we have 11 new extended stats
-		
-		// statDISTANCE
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_DistancePDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
-		++statCount;
+		M.extendedProjectileDamageStats.Insert(statCount, calculateExtendedStatsAmount());
 		
 		// statMAPlus
 		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_MAp_PDT;
@@ -113,11 +120,6 @@ function ModifyStats()
 		// statEatDisc
 		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_ED_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEatDisc';
-		++statCount;
-		
-		// statOMG
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_OMG_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statOMG';
 		++statCount;
 		
 		// PMA
@@ -146,9 +148,28 @@ function ModifyStats()
 		++statCount;
 		
 		// statSweetShot
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_SS_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statSweetShot';
-		++statCount;
+		for(i=0; i < stat_SS_PDT_LIST.Length ;i++)
+		{
+			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_SS_PDT_LIST[i];
+			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statSweetShot';
+			++statCount;
+		}
+		
+		// statOMG
+		for(i=0; i < stat_OMG_PDT_LIST.Length;i++)
+		{
+			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_OMG_PDT_LIST[i];
+			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statOMG';
+			++statCount;
+		}
+		
+		// statDISTANCE
+		for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
+		{
+			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_Distance_PDT_LIST[i];
+			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
+			++statCount;
+		}
 	}
 }
 
@@ -169,22 +190,29 @@ function Timer()
 
 defaultproperties
 {
-	stat_MA_PDT 	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
-	stat_MAp_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
-	stat_MApp_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
-	stat_ED_PDT 	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
-	stat_HS_PDT		=		Class'EquipmentClasses.ProjectileDamageTypeSniperRifle'
-	stat_EBMA_PDT	=		Class'Gameplay.ProjectileDamageType'
-	stat_GLMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
-	stat_MMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
-	stat_OMG_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeExplosion'
-	stat_SS_PDT		=		Class'EquipmentClasses.ProjectileDamageTypeExplosion'
-	stat_PMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeBurner'
-	stat_RPMA_PDT	=		Class'EquipmentClasses.ProjectileDamageTypeRocketPod'
-	stat_DistancePDT= 		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_MA_PDT 			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_MAp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_MApp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_ED_PDT 			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_HS_PDT				=		Class'EquipmentClasses.ProjectileDamageTypeSniperRifle'
+	stat_EBMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeDefault'
+	stat_GLMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
+	stat_MMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
+	stat_PMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeBurner'
+	stat_RPMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeRocketPod'
 	
-	clientStatsClass	= None
-	serverSettingsClass	= None
+	stat_OMG_PDT_LIST(0)	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_OMG_PDT_LIST(1)	=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
+	stat_OMG_PDT_LIST(2)	=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
+	stat_SS_PDT_LIST(0)		=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_SS_PDT_LIST(1)		=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
+	stat_SS_PDT_LIST(2)		=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
+	stat_Distance_PDT_LIST(0)= 		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
+	stat_Distance_PDT_LIST(1)= 		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
+	stat_Distance_PDT_LIST(2)= 		Class'EquipmentClasses.ProjectileDamageTypeMortar'
 	
-	StatTrackerSpawnDelay	=	5
+	clientStatsClass		=		None
+	serverSettingsClass		=		None
+	
+	StatTrackerSpawnDelay	=		5
 }
