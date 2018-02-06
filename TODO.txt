@@ -1,3 +1,3 @@
--	Find out why SS stat doesnt work
--	Implement config var array for mutitple PDT / stat
 -	IMplement server stat settings
+-	make all stats modifiable (kill / base / etc)
+-	Implement distance highscore logic (currently it add's all distances together)
