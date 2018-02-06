@@ -34,14 +34,7 @@ event PostBeginPlay()
 
 function browseStats()
 {
-	local ModeInfo M;
-	local int i, statCount;
-
-	M = ModeInfo(Level.Game);
-
-	if ( M == None ) return;
 }
-
 
 defaultproperties
 {

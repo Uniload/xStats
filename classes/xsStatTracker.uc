@@ -1,0 +1,1 @@
+class xsStatTracker extends Gameplay.StatTracker config;

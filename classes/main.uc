@@ -32,7 +32,7 @@ replication
 
 simulated event PreBeginPlay()
 {
-	ModeInfo(Level.Game).Tracker = spawn(class'xStats.xStatTracker');
+	ModeInfo(Level.Game).Tracker = spawn(class'xStats.xsStatTracker');
 	//Need to reinitialise tracker by calling Level.Game.PBP
 	Level.Game.PostBeginPlay();
 }
