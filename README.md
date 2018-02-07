@@ -26,10 +26,13 @@ Features:
   
   3. Run your server with the following mutator parameter: `?mutator=xStats.main`.
   
-  4. If you are running x2 or promod, make sure set `BonusStatsOn=False` in their respective config files. 
+  4. If you are running x2 or promod, make sure to set `BonusStatsOn=False` in their respective config files. 
   
-  5. If you have a mutator running that modifies the custom ProjectileDamageTypes (f.e. promod), you will have to edit the automatically generated `xStats.ini` file to refer to the modified ProjectileDamageTypes. 
-
+  5. If you have a mutator running that modifies the default ProjectileDamageTypes (f.e. promod), you will have to edit the automatically generated `xStats.ini` file to refer to the modified ProjectileDamageTypes like so: 
+  ```ini
+  stat_HS_PDT=Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
+  stat_EBMA_PDT=Class'promod_v1rc7_b3.promodBladeProjectileDamageType'
+  ```
 
 ## xStats.ini example
 
