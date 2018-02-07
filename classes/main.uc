@@ -35,8 +35,8 @@ replication
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	
-	log(VERSION_NAME $ ": Startup...);
+
+	log(VERSION_NAME $ ": Startup...");
 	log(VERSION_NAME $ ": xsStatTracker spawning in " $ StatTrackerSpawnDelay $ " seconds...");
 	
 	ServerSaveConfig();
@@ -181,14 +181,14 @@ function Timer()
 	local xStats.xsStatTracker xsst;
 	local Gameplay.StatTracker st;
 	
-	log(VERSION_NAME $ ": xsStatTracker spawning...);
+	log(VERSION_NAME $ ": xsStatTracker spawning...");
 	
 	st = ModeInfo(Level.Game).Tracker;
 	xsst = Spawn(class'xStats.xsStatTracker');
 	xsst.copy(st);
 	
 	ModeInfo(Level.Game).Tracker = xsst;
-	log(VERSION_NAME $ ": Startup complete.);
+	log(VERSION_NAME $ ": Startup complete.");
 }
 
 defaultproperties

@@ -44,9 +44,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	{
 		value = 1;
 	}
-	
-	log(s);
-	
+
 	TRI = TribesReplicationInfo(PC.PlayerReplicationInfo);
 
 	if (TRI == None)
