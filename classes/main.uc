@@ -36,6 +36,9 @@ simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
 	
+	log(VERSION_NAME $ ": Startup...);
+	log(VERSION_NAME $ ": xsStatTracker spawning in " $ StatTrackerSpawnDelay $ " seconds...");
+	
 	ServerSaveConfig();
 	
 	
@@ -54,7 +57,6 @@ private function int calculateExtendedStatsAmount()
 	amt += stat_SS_PDT_LIST.Length;
 	amt += stat_OMG_PDT_LIST.Length;
 	amt += stat_Distance_PDT_LIST.Length;
-	log("LENGTH OF EXTENDED::::::" @ amt);
 	return amt;
 }
 
@@ -122,6 +124,14 @@ function ModifyStats()
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEatDisc';
 		++statCount;
 		
+		// statDISTANCE
+		for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
+		{
+			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_Distance_PDT_LIST[i];
+			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
+			++statCount;
+		}
+		
 		// PMA
 		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_PMA_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statPMA';
@@ -130,11 +140,6 @@ function ModifyStats()
 		// E-Blade
 		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_EBMA_PDT;
 		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEBMA';
-		++statCount;
-		
-		// statRocketeer
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_RPMA_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statRocketeer';
 		++statCount;
 		
 		// GLMA
@@ -163,13 +168,10 @@ function ModifyStats()
 			++statCount;
 		}
 		
-		// statDISTANCE
-		for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
-		{
-			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_Distance_PDT_LIST[i];
-			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
-			++statCount;
-		}
+		// statRocketeer
+		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_RPMA_PDT;
+		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statRocketeer';
+		++statCount;
 	}
 }
 
@@ -179,13 +181,14 @@ function Timer()
 	local xStats.xsStatTracker xsst;
 	local Gameplay.StatTracker st;
 	
+	log(VERSION_NAME $ ": xsStatTracker spawning...);
+	
 	st = ModeInfo(Level.Game).Tracker;
 	xsst = Spawn(class'xStats.xsStatTracker');
 	xsst.copy(st);
 	
 	ModeInfo(Level.Game).Tracker = xsst;
-	//check
-	log("xStats: StatTracker has been initialized");
+	log(VERSION_NAME $ ": Startup complete.);
 }
 
 defaultproperties
@@ -194,8 +197,8 @@ defaultproperties
 	stat_MAp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_MApp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_ED_PDT 			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
-	stat_HS_PDT				=		Class'EquipmentClasses.ProjectileDamageTypeSniperRifle'
-	stat_EBMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeDefault'
+	stat_HS_PDT				=		Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
+	stat_EBMA_PDT			=		Class'promod_v1rc7_b3.promodBladeProjectileDamageType'
 	stat_GLMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
 	stat_MMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
 	stat_PMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeBurner'

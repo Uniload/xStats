@@ -19,6 +19,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	local TribesReplicationInfo TRI;
 	local PlayerController PC;
 	local int relativeDistance;
+	local bool bDistanceStat;
 	
 	if (C == None)
 		return;
@@ -30,7 +31,9 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	if (s.default.logLevel > globalLogLevel)
 		return;
 	
-	if (s == class'xStats.statDistance')
+	bDistanceStat = (s == class'xStats.statDistance');
+	
+	if (bDistanceStat)
 	{
 		if (target != None)
 		{
@@ -44,34 +47,33 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	
 	log(s);
 	
-	// Send personal message if applicable
-	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
-	{
-		if (target != None)
-			PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
-		else
-			PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(value));
-	}
-
-	// Send target message if applicable
-	//if (Target != None && s.default.targetMessage != "" && s.default.targetMessageClass != None)
-	//	PlayerController(Target).ReceiveLocalizedMessage(s.default.targetMessageClass, 0, s, C);
-
 	TRI = TribesReplicationInfo(PC.PlayerReplicationInfo);
 
 	if (TRI == None)
 		return;
 
 	sd = TRI.getStatData(s);
-
+	
 	if (sd == None)
 	{
 		Log("STATTRACKER warning:  An unregistered stat was awarded ("$s$")");
 		return;
 	}
-
-	sd.amount = sd.amount + value;
-
+	
+	// This is used to avoid displaying distance stat multiple times
+	if ( (Level.TimeSeconds - sd.lastAwardTimestamp) > 1)
+	{
+		// Send personal message if applicable
+		if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
+		{
+			if (target != None)
+				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
+			else
+				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(value));
+		}
+	}
+	
+	
 	// Set a timestamp
 	// This ensures that all serializers will report the stat being awarded
 	// at the same time.  It also allows this to be used to display times if
@@ -79,18 +81,30 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	// finishing time of a race (not sure how yet).
 	sd.lastAwardTimestamp = Level.TimeSeconds;
 
-	// Also award offense, defense and style points
-	TRI.offenseScore += sd.statClass.default.offensePointsPerStat * value;
-	TRI.defenseScore += sd.statClass.default.defensePointsPerStat * value;
-	TRI.styleScore += sd.statClass.default.stylePointsPerStat * value;
+	//Custom score system for distance stat.
+	
+	if (!bDistanceStat)
+	{
+		sd.amount = sd.amount + value;
+	
+		// Also award offense, defense and style points
+		TRI.offenseScore += sd.statClass.default.offensePointsPerStat * value;
+		TRI.defenseScore += sd.statClass.default.defensePointsPerStat * value;
+		TRI.styleScore += sd.statClass.default.stylePointsPerStat * value;
 
-	// Calculate total score here for now; eventually this can be
-	// performed when the score is displayed
-	TRI.Score += sd.statClass.default.offensePointsPerStat * value;
-	TRI.Score += sd.statClass.default.defensePointsPerStat * value;
-	TRI.Score += sd.statClass.default.stylePointsPerStat * value;
-
-	//Log("TRACKER awarded "$s);
+		// Calculate total score here for now; eventually this can be
+		// performed when the score is displayed
+		TRI.Score += sd.statClass.default.offensePointsPerStat * value;
+		TRI.Score += sd.statClass.default.defensePointsPerStat * value;
+		TRI.Score += sd.statClass.default.stylePointsPerStat * value;
+	} else 
+	{
+		if (sd.amount < value)
+		{
+			sd.amount = value;
+			TRI.Score = value;
+		}
+	}
 
 	// Notify StatSerializers
 	for (i=0; i<statSerializers.Length; i++)
@@ -98,3 +112,9 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		statSerializers[i].serializeStat(TRI, sd);
 	}
 }
+
+/** Send message to target
+Send target message if applicable
+if (Target != None && s.default.targetMessage != "" && s.default.targetMessageClass != None)
+PlayerController(Target).ReceiveLocalizedMessage(s.default.targetMessageClass, 0, s, C);
+*/

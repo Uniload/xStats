@@ -1,6 +1,6 @@
 class xsExtendedStat extends Gameplay.ExtendedStat;
 
-var bool showDistance;
+var deprecated bool showDistance;
 
 static function bool isEligible(Controller Source, Controller Target, float damageAmount)
 {

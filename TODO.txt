@@ -1,3 +1,2 @@
 -	IMplement server stat settings
 -	make all stats modifiable (kill / base / etc)
--	Implement distance highscore logic (currently it add's all distances together)
