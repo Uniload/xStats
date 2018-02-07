@@ -22,9 +22,12 @@ Features:
 
   1. Copy `xStats.u` to your `Program/Bin/` directory.
   2. Add `ServerPackages=xStats`to your `Beta_Dedivated_Server.ini` file, under `[Engine.GameEngine]`.
+  (_Failing to perform this step will make the server shutdown the first time it is called with the xStat mutator parameter. This is because the mod has been added to the ServerPackages automatically, but it will only take effect after a server restart._)
+  
   3. Run your server with the following mutator parameter: `?mutator=xStats.main`.
-
+  
   4. If you are running x2 or promod, make sure set `BonusStatsOn=False` in their respective config files. 
+  
   5. If you have a mutator running that modifies the custom ProjectileDamageTypes (f.e. promod), you will have to edit the automatically generated `xStats.ini` file to refer to the modified ProjectileDamageTypes. 
 
 
