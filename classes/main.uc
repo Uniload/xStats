@@ -191,6 +191,16 @@ function Timer()
 	log(VERSION_NAME $ ": Startup complete.");
 }
 
+/**
+ *	Not sure about this.
+ */
+simulated event Destroyed()
+{
+	clientStatsClass.Destroy();
+	serverSettingsClass.Destroy();
+	Super.Destroy();
+}
+
 defaultproperties
 {
 	stat_MA_PDT 			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
