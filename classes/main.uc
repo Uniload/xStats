@@ -5,6 +5,7 @@ class main extends Gameplay.Mutator config(xStats);
  *	Thanks schlieperich for laying the first stone years before I even knew about tribes.
 **/
 
+const PACKAGE_NAME = "xStats";
 const VERSION_NAME = "xStats_b1";
 
 var int StatTrackerSpawnDelay;
@@ -32,6 +33,12 @@ replication
         clientStatsClass;
 }
 
+function PreBeginPlay()
+{
+	Super.PreBeginPlay();
+	AddServerPackage(PACKAGE_NAME);
+}
+
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
@@ -48,6 +55,33 @@ simulated event PostBeginPlay()
 	ModifyStats();
 
 	SetTimer(StatTrackerSpawnDelay, False);
+}
+
+/**	From Antics_v1
+ */
+function AddServerPackage(string Package)
+{
+	local bool AddServerPackage;
+	local int i;
+	
+	AddServerPackage = true;
+	
+	for(i = 0; i < class'Engine.GameEngine'.default.ServerPackages.Length; i++)
+	{
+		if (class'Engine.GameEngine'.default.ServerPackages[i] == Package)
+		{
+			AddServerPackage = false;
+			break;
+		}
+	}
+	
+	if (AddServerPackage)
+	{
+		class'Engine.GameEngine'.default.ServerPackages[class'Engine.GameEngine'.default.ServerPackages.Length] = Package;
+		class'Engine.GameEngine'.static.StaticSaveConfig();
+		log("Added a server package '" $ Package $ "'. Server requires a restart for setup to complete!");
+		ConsoleCommand("Exit");
+	}
 }
 
 private function int calculateExtendedStatsAmount()
@@ -228,4 +262,8 @@ defaultproperties
 	serverSettingsClass		=		None
 	
 	StatTrackerSpawnDelay	=		5
+	
+	bAddToServerPackages	=		True
+	FriendlyName			=		"xStats"
+	Description				=		"Gameplay stat manager"
 }
