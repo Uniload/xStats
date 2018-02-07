@@ -14,13 +14,13 @@ Features:
 
 * Clients & Demo playback:
 
-  1. Copy xStats.u to your Program/Bin/ directory.
+  1. Copy `xStats.u` to your `Program/Bin/` directory. (A cached copy of the mutator will work as well).
   2. Edit the automatically generated `xStats.ini` file to your liking.
 
 
 * Server (NM_DedicatedServer & NM_ListenServer):
 
-  1. Copy xStats.u to your Program/Bin/ directory.
+  1. Copy `xStats.u` to your `Program/Bin/` directory.
   2. Add `ServerPackages=xStats`to your `Beta_Dedivated_Server.ini` file, under `[Engine.GameEngine]`.
   3. Run your server with the following mutator parameter: `?mutator=xStats.main`.
 
