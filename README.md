@@ -9,7 +9,7 @@ Features:
   * Dynamic stat loading to avoid compatibility issues.
 * new distance stat.
 
-
+***
 ## Installation
 
 * Clients & Demo playback:
@@ -33,22 +33,33 @@ Features:
   stat_HS_PDT=Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
   stat_EBMA_PDT=Class'promod_v1rc7_b3.promodBladeProjectileDamageType'
   ```
-
+  
+***
 ## xStats.ini example
 
 The config file will automatically be generated if missing, or load the variables at every Level startup.
 
 Please refer to **[xStats.ini][configfile]** for an overview of the config file.
 
-
+***
 ## Package Compilation
 
+UCC.ini file:
+###### NOTE: xStats holds references to the default `StatClasses.pkg` package. Since there is no way to obtain the sourcecode of StatsClasses, you will have to create a stub `StatClasses.u` package for xStats to compile successfuly.</dd>
+```ini
+[Editor.EditorEngine]
+...
+EditPackages=StatClasses
+EditPackages=xStats
+```
+
+UCC script:
 ```sh
 ucc.exe make -nobind
 ucc.exe editor.stripsourcecommandlet xStats.u
 ```
 
-
+***
 ## Release History
 
 * xStats_b1
