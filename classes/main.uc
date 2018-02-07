@@ -27,10 +27,21 @@ var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_SS_P
 var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_OMG_PDT_LIST;
 var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_Distance_PDT_LIST;
 
+// ======================================================================================================================
+
+/**	Will cause the clientStatClass to be spawned on the clients, allowing them to load/edit their own stat messages.
+ */
 replication
 {
     reliable if (bNetInitial)
         clientStatsClass;
+}
+
+/**	Save/load this classes config variables on the server
+ */
+function ServerSaveConfig()
+{
+	SaveConfig();
 }
 
 function PreBeginPlay()
@@ -57,7 +68,24 @@ simulated event PostBeginPlay()
 	SetTimer(StatTrackerSpawnDelay, False);
 }
 
-/**	From Antics_v1
+/** Used to swap the default StatTracker class with xsStatTracker
+ */
+function Timer()
+{	
+	local xStats.xsStatTracker xsst;
+	local Gameplay.StatTracker st;
+	
+	log(VERSION_NAME $ ": xsStatTracker spawning...");
+	
+	st = ModeInfo(Level.Game).Tracker;
+	xsst = Spawn(class'xStats.xsStatTracker');
+	xsst.copy(st);
+	
+	ModeInfo(Level.Game).Tracker = xsst;
+	log(VERSION_NAME $ ": Startup complete.");
+}
+
+/**	From Antics_v1. Check ServerPackages for a specific package. If missing, this will add the package to the list and stop the server.
  */
 function AddServerPackage(string Package)
 {
@@ -94,139 +122,121 @@ private function int calculateExtendedStatsAmount()
 	return amt;
 }
 
-function ServerSaveConfig()
-{
-	SaveConfig();
-}
-
+/**	The order they are added in the list, is the order in which the stats will be displayed at endgame (simple stats BEFORE extended stats).
+ */
 function ModifyStats()
 {
 	local ModeInfo M;
-	local int i, statCount;
+	local int i, statCount, EXstatCount;
 
 	M = ModeInfo(Level.Game);
 
 	if(M != None)
 	{
-		for(i = 0; i < M.extendedProjectileDamageStats.Length; ++i)
-		{
-			// Set Extended stat to MA
-			if(M.extendedProjectileDamageStats[i].damageTypeClass == stat_MA_PDT)
-			{
-				M.extendedProjectileDamageStats[i].extendedStatClass = Class'statMA';
-			}		
-		}
 		for(i = 0; i < M.projectileDamageStats.Length; ++i)
 		{
-			// Remove default HS
+			// Remove default HS stat
 			if(M.projectileDamageStats[i].damageTypeClass == Class'EquipmentClasses.ProjectileDamageTypeSniperRifle')
 			{
 				M.projectileDamageStats.Remove(i, 1);
 			}
 		}
 
-                // ### DAMAGE STATS ###
-
-		statCount = M.projectileDamageStats.Length;
+		for(i = 0; i < M.extendedProjectileDamageStats.Length; ++i)
+		{
+			// Remove default MA stat, easier to order them by adding a new stat rather than using old one
+			if(M.extendedProjectileDamageStats[i].damageTypeClass == stat_MA_PDT)
+			{
+				M.extendedProjectileDamageStats.Remove(i, 1);
+			}		
+		}
 		
-		M.projectileDamageStats.Insert(statCount, 1);	// we have 1 new stats
+		statCount = M.projectileDamageStats.Length;
+		EXstatCount = M.extendedProjectileDamageStats.Length;
+		
+		M.projectileDamageStats.Insert(statCount, 1);	// we have 1 new SIMPLE stats
 
 		// Head Shot
 		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
 		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
-		//Useless?? M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats.xsExtendedStat';
+		// This one is most likely useless.
+		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats.xsExtendedStat';
 		++statCount;		
+	
+		M.extendedProjectileDamageStats.Insert(EXstatCount, calculateExtendedStatsAmount());
 		
-                // ### EXTENDED DAMAGE STATS ###
-
-		statCount = M.extendedProjectileDamageStats.Length;
+		// E-Blade
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_EBMA_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statEBMA';
+		++EXstatCount;
 		
-		M.extendedProjectileDamageStats.Insert(statCount, calculateExtendedStatsAmount());
+		// statMA
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_MA_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statMA';
+		++EXstatCount;
 		
 		// statMAPlus
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_MAp_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statMAPlus';
-		++statCount;
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_MAp_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statMAPlus';
+		++EXstatCount;
 		
 		// statMASupreme
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_MApp_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statMASupreme';
-		++statCount;
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_MApp_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statMASupreme';
+		++EXstatCount;
 		
 		// statEatDisc
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_ED_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEatDisc';
-		++statCount;
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_ED_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statEatDisc';
+		++EXstatCount;
 		
 		// statDISTANCE
 		for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
 		{
-			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_Distance_PDT_LIST[i];
-			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statDistance';
-			++statCount;
+			M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_Distance_PDT_LIST[i];
+			M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statDistance';
+			++EXstatCount;
 		}
 		
 		// PMA
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_PMA_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statPMA';
-		++statCount;
-		
-		// E-Blade
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_EBMA_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statEBMA';
-		++statCount;
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_PMA_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statPMA';
+		++EXstatCount;
 		
 		// GLMA
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_GLMA_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statGLMA';
-		++statCount;
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_GLMA_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statGLMA';
+		++EXstatCount;
 
 		// MMA
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_MMA_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statMMA';
-		++statCount;
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_MMA_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statMMA';
+		++EXstatCount;
 		
 		// statSweetShot
 		for(i=0; i < stat_SS_PDT_LIST.Length ;i++)
 		{
-			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_SS_PDT_LIST[i];
-			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statSweetShot';
-			++statCount;
+			M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_SS_PDT_LIST[i];
+			M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statSweetShot';
+			++EXstatCount;
 		}
 		
 		// statOMG
 		for(i=0; i < stat_OMG_PDT_LIST.Length;i++)
 		{
-			M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_OMG_PDT_LIST[i];
-			M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statOMG';
-			++statCount;
+			M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_OMG_PDT_LIST[i];
+			M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statOMG';
+			++EXstatCount;
 		}
 		
 		// statRocketeer
-		M.extendedProjectileDamageStats[statCount].damageTypeClass = stat_RPMA_PDT;
-		M.extendedProjectileDamageStats[statCount].extendedStatClass = Class'statRocketeer';
-		++statCount;
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_RPMA_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statRocketeer';
+		++EXstatCount;
 	}
 }
 
-function Timer()
-{	
-	// Replace default statTracker by swapping class . . .
-	local xStats.xsStatTracker xsst;
-	local Gameplay.StatTracker st;
-	
-	log(VERSION_NAME $ ": xsStatTracker spawning...");
-	
-	st = ModeInfo(Level.Game).Tracker;
-	xsst = Spawn(class'xStats.xsStatTracker');
-	xsst.copy(st);
-	
-	ModeInfo(Level.Game).Tracker = xsst;
-	log(VERSION_NAME $ ": Startup complete.");
-}
-
-/**
- *	Not sure about this.
+/**	Not sure about this.
  */
 simulated event Destroyed()
 {
@@ -234,6 +244,8 @@ simulated event Destroyed()
 	serverSettingsClass.Destroy();
 	Super.Destroy();
 }
+
+// ======================================================================================================================
 
 defaultproperties
 {
