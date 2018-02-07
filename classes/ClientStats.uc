@@ -12,7 +12,16 @@ var config string messageRocketPodMA;
 var config string messageGrenadeLauncherMA;
 var config string messageBladeMa;
 var config string messageSniperHS;
-
+// ============================================
+/** DEFAULT CTF STATS
+var config string messageKill;
+var config string messageFlagReturned;
+var config string messageFlagCaptured;
+var config string messageCapperKilled;
+var config string messageFlagDefended;
+var config string messageFlagAttacked;
+*/
+// ============================================
 
 simulated event PostBeginPlay()
 {

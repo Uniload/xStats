@@ -1,2 +1,3 @@
 -	IMplement server stat settings
 -	make all stats modifiable (kill / base / etc)
+-	Increase FlagAttacked / FlagDefended stat radius
