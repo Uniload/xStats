@@ -59,9 +59,8 @@ simulated event PostBeginPlay()
 	
 	ServerSaveConfig();
 	
-	
-	clientStatsClass = spawn(class'xStats.ClientStats');
 	serverSettingsClass = spawn(class'xStats.StatSettings');
+	clientStatsClass = spawn(class'xStats.ClientStats');
 	
 	ModifyStats();
 
