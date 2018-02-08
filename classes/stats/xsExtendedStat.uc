@@ -3,7 +3,10 @@ class xsExtendedStat extends Gameplay.ExtendedStat;
 var config int Server_minTargetAltitude;
 var config int Server_minDistance;
 var config int Server_MaxDistance;
-var config int Server_minDamage;
+var config float Server_MinTargetSpeed;
+var config float Server_MaxTargetSpeed;
+var config float Server_minDamage;
+var config bool Server_bAllowTargetInVehicleOrTurret;
 var config int Server_offensePointsPerStat;
 var config int Server_defensePointsPerStat;
 var config int Server_stylePointsPerStat;
@@ -11,17 +14,19 @@ var config int Server_logLevel;
 var config string Server_Acronym;
 var config string Server_Description;
 var config string Server_awardDescription;
-var config string Server_personalMessage;
 var config class<MPPersonalMessage> Server_PersonalMessageClass;
 
-simulated function setStats()
+simulated function Initialize()
 {
 	ServerSaveConfig();
 	
 	(Self.class).default.minTargetAltitude = Server_minTargetAltitude;
 	(Self.class).default.minDistance = Server_minDistance;
 	(Self.class).default.MaxDistance = Server_MaxDistance;
+	(Self.class).default.minTargetSpeed = Server_MinTargetSpeed;
+	(Self.class).default.maxTargetSpeed = Server_MaxTargetSpeed;
 	(Self.class).default.minDamage = Server_minDamage;
+	(Self.class).default.bAllowTargetInVehicleOrTurret = Server_bAllowTargetInVehicleOrTurret;
 	(Self.class).default.offensePointsPerStat = Server_offensePointsPerStat;
 	(Self.class).default.defensePointsPerStat = Server_defensePointsPerStat;
 	(Self.class).default.stylePointsPerStat = Server_stylePointsPerStat;
@@ -29,7 +34,6 @@ simulated function setStats()
 	(Self.class).default.Acronym = Server_Acronym;
 	(Self.class).default.Description = Server_Description;
 	(Self.class).default.awardDescription = Server_awardDescription;
-	(Self.class).default.personalMessage = Server_personalMessage;
 	(Self.class).default.PersonalMessageClass = Server_PersonalMessageClass;
 }
 
@@ -90,4 +94,19 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 
 defaultproperties
 {
+	Server_minTargetAltitude		=	0
+	Server_minDistance				=	0
+	Server_MaxDistance				=	0
+	Server_MinTargetSpeed 			=	0
+	Server_MaxTargetSpeed 			=	0
+	Server_minDamage				=	0
+	Server_bAllowTargetInVehicleOrTurret	=	False
+	Server_offensePointsPerStat		=	0
+	Server_defensePointsPerStat		=	0
+	Server_stylePointsPerStat		=	0
+	Server_logLevel					=	3
+	Server_Acronym					=	"NONE"
+	Server_Description				=	"Default"
+	Server_awardDescription			=	"Default"
+	Server_PersonalMessageClass		=	Class'StatClasses.MPPersonalStatMessageDefault'
 }

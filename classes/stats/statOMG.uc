@@ -13,4 +13,20 @@ defaultproperties
 	awardDescription="Most O   M   G 's"
 	personalMessage="     +   O   M   G   +     "
 	PersonalMessageClass=Class'StatClasses.MPPersonalStatMessageDefault'
+	
+	Server_minTargetAltitude		=	200
+	Server_minDistance				=	0
+	Server_MaxDistance				=	0
+	Server_MinTargetSpeed 			=	200
+	Server_MaxTargetSpeed 			=	0
+	Server_minDamage				=	44
+	Server_bAllowTargetInVehicleOrTurret	=	True
+	Server_offensePointsPerStat		=	0
+	Server_defensePointsPerStat		=	0
+	Server_stylePointsPerStat		=	3
+	Server_logLevel					=	3
+	Server_Acronym					=	"OMG"
+	Server_Description				=	"O M G 's"
+	Server_awardDescription			=	"Most O M G 's"
+	Server_PersonalMessageClass		=	Class'StatClasses.MPPersonalStatMessageDefault'
 }

@@ -17,7 +17,9 @@ defaultproperties
 	Server_minTargetAltitude		=	0
 	Server_minDistance				=	0
 	Server_MaxDistance				=	0
-	Server_minDamage				=	50
+	Server_minDamage				=	1
+	Server_MinTargetSpeed 			=	0
+	Server_MaxTargetSpeed 			=	0
 	Server_offensePointsPerStat		=	0
 	Server_defensePointsPerStat		=	0
 	Server_stylePointsPerStat		=	0
@@ -25,6 +27,5 @@ defaultproperties
 	Server_Acronym					=	"DMA"
 	Server_Description				=	"Longest DISC midair"
 	Server_awardDescription			=	"Longest DISC midair"
-	Server_personalMessage			=	"%1 units"
 	Server_PersonalMessageClass		=	Class'xStats.xsDistanceStatMessage'
 }
