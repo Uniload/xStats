@@ -6,7 +6,7 @@ var config int sustainedSpeedCap;
 simulated event PreBeginPlay()
 {
 	Super.PreBeginPlay();
-	log("SPAWNED");
+	log("xStats_b1: SPAWNING server settings");
 }
 
 simulated event PostBeginPlay()

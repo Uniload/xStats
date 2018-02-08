@@ -16,12 +16,7 @@ var config class<MPPersonalMessage> Server_PersonalMessageClass;
 
 simulated function setStats()
 {
-	local string s;
-	SaveConfig();
-	
-	log(Self.class);
-	s = (Self.class).default.awardDescription;
-	log(s);
+	ServerSaveConfig();
 	
 	(Self.class).default.minTargetAltitude = Server_minTargetAltitude;
 	(Self.class).default.minDistance = Server_minDistance;
@@ -36,9 +31,11 @@ simulated function setStats()
 	(Self.class).default.awardDescription = Server_awardDescription;
 	(Self.class).default.personalMessage = Server_personalMessage;
 	(Self.class).default.PersonalMessageClass = Server_PersonalMessageClass;
-	
-	s = (Self.class).default.awardDescription;
-	log(s);
+}
+
+function ServerSaveConfig()
+{
+	SaveConfig();
 }
 
 static function bool isEligible(Controller Source, Controller Target, float damageAmount)
