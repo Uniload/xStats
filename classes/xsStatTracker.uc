@@ -1,5 +1,7 @@
 class xsStatTracker extends Gameplay.StatTracker config;
 
+var int sustainedSpeedCap;
+
 /**
  * Did not manage to make Spawn(class,x,x,x,template) work.
  * Gonna have to copy properties manually...
@@ -10,6 +12,27 @@ function copy(Gameplay.StatTracker st)
 	Self.stats = st.stats;
 	Self.statSerializers = st.statSerializers;
 	Self.currentStatID = currentStatID;
+}
+
+/**	Remove Highspeed
+ */
+function setStat(Controller c, class<Stat> s, int value)
+{
+	local TribesReplicationInfo TRI;
+
+	TRI = TribesReplicationInfo(C.PlayerReplicationInfo);
+
+	if (TRI == None)
+		return;
+	if (s == ModeInfo(Level.Game).highestSpeedStat.class)
+	{
+		log(value);
+		if (value <= sustainedSpeedCap)
+			TRI.getStatData(s).amount = value;
+	} else
+	{
+		TRI.getStatData(s).amount = value;
+	}
 }
 
 function awardStat(Controller C, Class<Stat> s, optional Controller Target, optional int value)
@@ -103,7 +126,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 			TRI.Score = value;
 		}
 	}
-
+	
 	// Notify StatSerializers
 	for (i=0; i<statSerializers.Length; i++)
 	{
@@ -116,3 +139,8 @@ Send target message if applicable
 if (Target != None && s.default.targetMessage != "" && s.default.targetMessageClass != None)
 PlayerController(Target).ReceiveLocalizedMessage(s.default.targetMessageClass, 0, s, C);
 */
+
+defaultproperties
+{
+	sustainedSpeedCap	=	400
+}

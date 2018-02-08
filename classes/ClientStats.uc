@@ -21,7 +21,7 @@ var config string messageFlagCaptured;
 var config string messageCapperKilled;
 var config string messageFlagDefended;
 var config string messageFlagAttacked;
-var vonfig string messageFlagPickup;
+var config string messageFlagPickup;
 /** DEFAULT TERRITORY STATS **/
 var config string messageTerritoryCaptured;
 /** DEFAULT FUEL STATS **/
