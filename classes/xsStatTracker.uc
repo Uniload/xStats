@@ -66,7 +66,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	{
 		value = 1;
 	}
-
+	
 	TRI = TribesReplicationInfo(PC.PlayerReplicationInfo);
 
 	if (TRI == None)
@@ -80,11 +80,10 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		return;
 	}
 	
-	// This is used to avoid displaying distance stat multiple times
-	if ( (Level.TimeSeconds - sd.lastAwardTimestamp) > 1)
+	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
 	{
-		// Send personal message if applicable
-		if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
+		// This is used to avoid displaying distance stat multiple times
+		if (bDistanceStat && (Level.TimeSeconds - sd.lastAwardTimestamp) > 1)
 		{
 			if (target != None)
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
@@ -92,7 +91,6 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(value));
 		}
 	}
-	
 	
 	// Set a timestamp
 	// This ensures that all serializers will report the stat being awarded
@@ -122,10 +120,17 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		if (sd.amount < value)
 		{
 			sd.amount = value;
-			TRI.Score = value;
+
+			TRI.offenseScore += sd.statClass.default.offensePointsPerStat;
+			TRI.defenseScore += sd.statClass.default.defensePointsPerStat;
+			TRI.styleScore += sd.statClass.default.stylePointsPerStat;
+			
+			TRI.Score += sd.statClass.default.offensePointsPerStat;
+			TRI.Score += sd.statClass.default.defensePointsPerStat;
+			TRI.Score += sd.statClass.default.stylePointsPerStat;
 		}
 	}
-	
+
 	// Notify StatSerializers
 	for (i=0; i<statSerializers.Length; i++)
 	{

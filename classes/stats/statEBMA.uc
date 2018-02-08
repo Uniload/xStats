@@ -23,7 +23,7 @@ defaultproperties
 	Server_stylePointsPerStat		=	1
 	Server_logLevel					=	3
 	Server_Acronym					=	"MAEB"
-	Server_Description				=	"Knife midairs"
-	Server_awardDescription			=	"Most midair stabs"
+	Server_Description				=	"Energy blade midairs"
+	Server_awardDescription			=	"Most energy blade midairs"
 	Server_PersonalMessageClass		=	Class'StatClasses.MPPersonalStatMessageDefault'
 }

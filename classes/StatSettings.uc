@@ -22,16 +22,21 @@ simulated event PreBeginPlay()
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
-
-	ServerSaveConfig();
 	
 	//SetStatSettings();
+}
+
+function Initialize()
+{
+	ServerSaveConfig();
+	SetStatSettings();
 }
 
 /**	When Clients receive replicated content, this function will be called.
  */
 simulated function PostNetReceive()
 {
+	log("POST NET RECEIVE STAT SETTINGS ( SERVER CLASS )");
 	SetStatSettings();
 }
 
@@ -49,7 +54,6 @@ function bool addToStatList(class<xStats.xsExtendedStat> customStat)
 	
 	for (i = 0; i <	ArrayCount(statList); i++)
 	{
-		log("Adding: " $ customStat);
 		if ( statList[i] == None )
 		{
 			statlist[i] = customStat;
@@ -68,7 +72,6 @@ simulated function SetStatSettings()
 	
 	for(i = 0; i < ArrayCount(statList); i++)
 	{
-		log("Setting Stats: " $ statList[i]);
 		if (statList[i] != None)
 		{
 			(new statList[i]).Initialize();
@@ -80,7 +83,7 @@ simulated function SetStatSettings()
 defaultproperties
 {
 	sustainedSpeedCap	=	400
-
+	
 	bNetNotify				=		True
 	NetUpdateFrequency		=		1
 	bStatic					=		False

@@ -128,7 +128,8 @@ defaultproperties
 	messageGrenadeLauncherMA=		"You grenade midaired %1"
 	messageBladeMa			=		"You midair knifed %1"
 	messageSniperHS			=		"Head Shot!"
-	
+
+	bNetNotify				=		True
 	NetUpdateFrequency		=		1
 	bStatic					=		False
 	bNoDelete				=		False

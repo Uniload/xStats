@@ -25,7 +25,7 @@ defaultproperties
 	Server_stylePointsPerStat		=	0
 	Server_logLevel					=	3
 	Server_Acronym					=	"DMA"
-	Server_Description				=	"Longest DISC midair"
-	Server_awardDescription			=	"Longest DISC midair"
+	Server_Description				=	"Longest Disc midair"
+	Server_awardDescription			=	"Longest Disc midair"
 	Server_PersonalMessageClass		=	Class'xStats.xsDistanceStatMessage'
 }

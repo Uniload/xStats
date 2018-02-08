@@ -1,3 +1,6 @@
+-	Quiting server causes General protection fault, gg
+-	!!!!!!!!!!!!!!!!!!!!CLients distance stat is registered as score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 -	IMplement server stat settings
 -	Increase FlagAttacked / FlagDefended stat radius
 -	Make distance work for sniper
@@ -7,5 +10,4 @@
 	(Server shoud store vars on HDD, client should "load" them through replication)
 
 -	Check BodyBlock stat
--	Set FlagGrab personalMessageClass to "Noscore"
 - 	???

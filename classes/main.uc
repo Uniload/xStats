@@ -10,7 +10,7 @@ const VERSION_NAME = "xStats_b1";
 
 var config int StatTrackerSpawnDelay;
 
-var private Actor clientStatsClass;
+var private xStats.ClientStats clientStatsClass;
 var private xStats.StatSettings serverSettingsClass;
 
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MA_PDT;
@@ -61,10 +61,10 @@ simulated event PostBeginPlay()
 	
 	serverSettingsClass = spawn(class'xStats.StatSettings');
 	clientStatsClass = spawn(class'xStats.ClientStats');
-
+	
 	ModifyStats();
 	
-	serverSettingsClass.SetStatSettings();
+	serverSettingsClass.Initialize();
 	
 	SetTimer(StatTrackerSpawnDelay, False);
 }
@@ -256,9 +256,9 @@ simulated function ModifyStats()
  */
 simulated event Destroyed()
 {
-	clientStatsClass.Destroy();
-	serverSettingsClass.Destroy();
-	Super.Destroy();
+	clientStatsClass = None;
+	serverSettingsClass = None;
+	Self.Destroy();
 }
 
 // ======================================================================================================================
@@ -290,10 +290,11 @@ defaultproperties
 	clientStatsClass		=		None
 	serverSettingsClass		=		None
 	
-	StatTrackerSpawnDelay	=		4
+	StatTrackerSpawnDelay	=		5
 	
 	bAddToServerPackages	=		True
 	FriendlyName			=		"xStats"
 	Description				=		"Gameplay stat manager"
 	
+	RemoteRole				=		ROLE_Authority
 }
