@@ -2,26 +2,45 @@ class StatSettings extends Engine.Actor config(xStats);
 
 var config int sustainedSpeedCap;
 
-event PreBeginPlay()
+
+simulated event PreBeginPlay()
 {
 	Super.PreBeginPlay();
+	log("SPAWNED");
 }
 
-event PostBeginPlay()
+simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
 
+	ServerSaveConfig();
+	SetStatSettings();
+}
+
+function ServerSaveConfig()
+{
 	SaveConfig();
 }
 
-function applySettings()
+simulated function SetStatSettings()
 {
+	local int i;
+	
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
+	
+	for (i = 0; i < 1; i++)
+	{
+		(new class'xStats.statDistance').setStats();
+	}
 }
 
 defaultproperties
 {
-	sustainedSpeedCap	=	400
+	sustainedSpeedCap	=	350
 
-	NetUpdateFrequency = 0	
+	NetUpdateFrequency		=		1
+	bStatic					=		False
+	bNoDelete				=		False
+	bAlwaysRelevant			=		False
+	netPriority				=		1
 }

@@ -8,7 +8,7 @@ class main extends Gameplay.Mutator config(xStats);
 const PACKAGE_NAME = "xStats";
 const VERSION_NAME = "xStats_b1";
 
-var int StatTrackerSpawnDelay;
+var config int StatTrackerSpawnDelay;
 
 var private Actor clientStatsClass;
 var private Actor serverSettingsClass;
@@ -34,7 +34,7 @@ var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_Dist
 replication
 {
     reliable if (bNetInitial)
-        clientStatsClass;
+        clientStatsClass, serverSettingsClass;
 }
 
 /**	Save/load this classes config variables on the server

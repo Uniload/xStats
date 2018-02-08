@@ -2,7 +2,6 @@ Class statEatDisc extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
-	showDistance=True
 	minTargetAltitude=200
 	minDistance=000
 	MaxDistance=30000

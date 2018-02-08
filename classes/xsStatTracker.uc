@@ -14,7 +14,7 @@ function copy(Gameplay.StatTracker st)
 	Self.currentStatID = currentStatID;
 }
 
-/**	Remove Highspeed
+/**	Set Highspeed cap (defined in StatSettings class)
  */
 function setStat(Controller c, class<Stat> s, int value)
 {
@@ -22,13 +22,10 @@ function setStat(Controller c, class<Stat> s, int value)
 
 	TRI = TribesReplicationInfo(C.PlayerReplicationInfo);
 	
-	log(Level.Game.Name);
-	
 	if (TRI == None)
 		return;
 	if (s == class'StatClasses.StatHighestSpeed')
 	{
-		log("WORKS");
 		if (value <= sustainedSpeedCap)
 			TRI.getStatData(s).amount = value;
 	} else

@@ -5,7 +5,6 @@ Class statHS extends xsExtendedStat config(xStats);
  */
 defaultproperties
 {
-	showDistance=True
 	stylePointsPerStat=1
     logLevel=2
     Acronym="HS"

@@ -2,7 +2,6 @@ Class statMAPlus extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
-	showDistance=False
 	minTargetAltitude=200
 	minDistance=3000
 	MaxDistance=6000

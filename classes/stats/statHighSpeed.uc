@@ -1,0 +1,1 @@
+class statHighSpeed extends StatClasses.statDefault config(xStats);
