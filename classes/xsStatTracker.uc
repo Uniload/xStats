@@ -82,8 +82,15 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	
 	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
 	{
+		if (!bDistanceStat)
+		{
+			if (target != None)
+				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
+			else
+				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(value));
+		}
 		// This is used to avoid displaying distance stat multiple times
-		if (bDistanceStat && (Level.TimeSeconds - sd.lastAwardTimestamp) > 1)
+		else if ((Level.TimeSeconds - sd.lastAwardTimestamp) > 1)
 		{
 			if (target != None)
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
