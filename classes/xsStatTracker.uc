@@ -21,12 +21,14 @@ function setStat(Controller c, class<Stat> s, int value)
 	local TribesReplicationInfo TRI;
 
 	TRI = TribesReplicationInfo(C.PlayerReplicationInfo);
-
+	
+	log(Level.Game.Name);
+	
 	if (TRI == None)
 		return;
-	if (s == ModeInfo(Level.Game).highestSpeedStat.class)
+	if (s == class'StatClasses.StatHighestSpeed')
 	{
-		log(value);
+		log("WORKS");
 		if (value <= sustainedSpeedCap)
 			TRI.getStatData(s).amount = value;
 	} else
