@@ -1,6 +1,3 @@
--	Quiting server causes General protection fault, gg
-
--	IMplement server stat settings
 -	Increase FlagAttacked / FlagDefended stat radius
 -	Stop MA stats from being awarded when a groundhit splashes and kills a low HP target in the air.
 -	Limit class replication to once per level.
@@ -8,4 +5,4 @@
 	(Server shoud store vars on HDD, client should "load" them through replication)
 
 -	Check BodyBlock stat
-- 	???
+- 	Stat message to target ?

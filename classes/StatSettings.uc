@@ -6,7 +6,6 @@ var class<xStats.xsExtendedStat> statList[STATLIST_SIZE];
  
 var config int sustainedSpeedCap;
 
-// Replicate from Server -> Client
 replication
 {
     reliable if (Role == ROLE_Authority)
@@ -16,14 +15,12 @@ replication
 simulated event PreBeginPlay()
 {
 	Super.PreBeginPlay();
-	log("xStats_b1: SPAWNING server settings");
+	//log("xStats_b1: SPAWNING server settings");
 }
 
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	
-	//SetStatSettings();
 }
 
 function Initialize()
@@ -36,13 +33,14 @@ function Initialize()
  */
 simulated function PostNetReceive()
 {
-	log("POST NET RECEIVE STAT SETTINGS ( SERVER CLASS )");
+	//log("POST NET RECEIVE STAT SETTINGS ( SERVER CLASS )");
 	SetStatSettings();
 }
 
 function ServerSaveConfig()
 {
-	SaveConfig();
+	if (Level.NetMode != NM_Client)
+		SaveConfig();
 }
 
 function bool addToStatList(class<xStats.xsExtendedStat> customStat)
@@ -65,7 +63,13 @@ function bool addToStatList(class<xStats.xsExtendedStat> customStat)
 
 simulated function SetStatSettings()
 {
+	local Gameplay.ModeInfo M;
 	local int i;
+	
+	// xStats.xsExtendedStat classes do not have access to "Level.NetMode"
+	// Because I want to check: if (Level.NetMode == NM_Client), I can simulate the the same
+	// outcome by calling ModeInfo(Level.Game), that will be None if this code is run on a client.
+	M = ModeInfo(Level.Game);
 	
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
@@ -74,7 +78,7 @@ simulated function SetStatSettings()
 	{
 		if (statList[i] != None)
 		{
-			(new statList[i]).Initialize();
+			(new statList[i]).Initialize( M );
 		}
 	}
 	

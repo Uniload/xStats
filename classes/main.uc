@@ -41,7 +41,8 @@ replication
  */
 function ServerSaveConfig()
 {
-	SaveConfig();
+	if (Level.NetMode != NM_Client)
+		SaveConfig();
 }
 
 function PreBeginPlay()
@@ -55,7 +56,7 @@ simulated event PostBeginPlay()
 	Super.PostBeginPlay();
 
 	log(VERSION_NAME $ ": Startup...");
-	log(VERSION_NAME $ ": xsStatTracker spawning in " $ StatTrackerSpawnDelay $ " seconds...");
+	//log(VERSION_NAME $ ": xsStatTracker spawning in " $ StatTrackerSpawnDelay $ " seconds...");
 	
 	ServerSaveConfig();
 	
@@ -76,14 +77,14 @@ function Timer()
 	local xStats.xsStatTracker xsst;
 	local Gameplay.StatTracker st;
 	
-	log(VERSION_NAME $ ": xsStatTracker spawning...");
+	//log(VERSION_NAME $ ": xsStatTracker spawning...");
 	
 	st = ModeInfo(Level.Game).Tracker;
 	xsst = Spawn(class'xStats.xsStatTracker');
 	xsst.copy(st);
 	
 	ModeInfo(Level.Game).Tracker = xsst;
-	log(VERSION_NAME $ ": Startup complete.");
+	log(VERSION_NAME $ ": Startup completed.");
 }
 
 /**	From Antics_v1. Check ServerPackages for a specific package. If missing, this will add the package to the list and stop the server.
@@ -108,7 +109,7 @@ function AddServerPackage(string Package)
 	{
 		class'Engine.GameEngine'.default.ServerPackages[class'Engine.GameEngine'.default.ServerPackages.Length] = Package;
 		class'Engine.GameEngine'.static.StaticSaveConfig();
-		log("Added a server package '" $ Package $ "'. Server requires a restart for setup to complete!");
+		log(VERSION_NAME $ " Added a server package '" $ Package $ "'. Server requires a restart for setup to complete!");
 		ConsoleCommand("Exit");
 	}
 }

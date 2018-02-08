@@ -41,17 +41,23 @@ var config string messageDestorySensor;
 simulated event PreBeginPlay()
 {
 	Super.PreBeginPlay();
-	log("xStats_b1: SPAWNING client stats");
+	//log("xStats_b1: SPAWNING client stats");
 }
 
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
 
-	SaveConfig();
+	ClientSaveConfig();
 	
-	setStatMessages();
 	setDefaultStatMessages();
+	setStatMessages();
+}
+
+simulated function ClientSaveConfig()
+{
+	if (Level.NetMode == NM_Client)
+		SaveConfig();
 }
 
 simulated function setDefaultStatMessages()
