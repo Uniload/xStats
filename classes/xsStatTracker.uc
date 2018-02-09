@@ -42,6 +42,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	local PlayerController PC;
 	local int relativeDistance;
 	local bool bDistanceStat;
+	local class<xStats.xsExtendedStat> ES;
 	
 	if (C == None)
 		return;
@@ -80,22 +81,43 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		return;
 	}
 	
+	if (ClassIsChildOf(s, class'xStats.xsExtendedStat'))
+		ES = class<xStats.xsExtendedStat>(s);
+	
+	log(ClassIsChildOf(s, class'xStats.xsExtendedStat'));
+	
 	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
 	{
 		if (!bDistanceStat)
 		{
 			if (target != None)
+			{
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
+				if (ES != None)
+					PlayerController(Target).ReceiveLocalizedMessage(ES.default.Server_targetMessageClass, 0, s, C.playerReplicationInfo,, string(value));
+			}
 			else
+			{
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(value));
+				if (ES != None)
+					PlayerController(Target).ReceiveLocalizedMessage(ES.default.Server_targetMessageClass, 0, s,,, string(value));
+			}
 		}
 		// This is used to avoid displaying distance stat multiple times
 		else if ((Level.TimeSeconds - sd.lastAwardTimestamp) > 1)
 		{
 			if (target != None)
+			{
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
+				if (ES != None)
+					PlayerController(Target).ReceiveLocalizedMessage(ES.default.Server_targetMessageClass, 0, s, C.playerReplicationInfo,, string(value));
+			}
 			else
+			{
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s,,, string(value));
+				if (ES != None)
+					PlayerController(Target).ReceiveLocalizedMessage(ES.default.Server_targetMessageClass, 0, s,,, string(value));
+			}
 		}
 	}
 	

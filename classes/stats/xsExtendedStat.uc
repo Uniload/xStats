@@ -1,5 +1,9 @@
 class xsExtendedStat extends Gameplay.ExtendedStat;
 
+var config bool Server_notifyTarget;
+var config class<MPPersonalMessage> Server_targetMessageClass;
+var config string targetMessage;
+
 var config int Server_minTargetAltitude;
 var config int Server_minDistance;
 var config int Server_MaxDistance;
@@ -111,4 +115,7 @@ defaultproperties
 	Server_Description				=	"Default"
 	Server_awardDescription			=	"Default"
 	Server_PersonalMessageClass		=	Class'StatClasses.MPPersonalStatMessageDefault'
+	Server_notifyTarget				=	True
+	Server_targetMessageClass		=	class'xStats.xsTargetStatMessage'
+	targetMessage					=	"Hit by %1"
 }

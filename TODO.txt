@@ -1,8 +1,6 @@
 -	Increase FlagAttacked / FlagDefended stat radius
 -	Stop MA stats from being awarded when a groundhit splashes and kills a low HP target in the air.
 -	Limit class replication to once per level.
--	Avoid NM_Client to call SaveConfig(). Need to think about the implications that it will have with the config variables that have to be received from the server....
-	(Server shoud store vars on HDD, client should "load" them through replication)
 
 -	Check BodyBlock stat
 - 	Stat message to target ?

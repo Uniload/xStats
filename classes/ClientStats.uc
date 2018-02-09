@@ -13,6 +13,19 @@ var config string messageGrenadeLauncherMA;
 var config string messageBladeMa;
 var config string messageSniperHS;
 
+var config string messageTargetDistance;
+var config string messageTargetSpinfusorMA;
+var config string messageTargetSpinfusorMAPlus;
+var config string messageTargetSpinfusorMASupreme;
+var config string messageTargetSpinfusorEatDisc;
+var config string messageTargetOMG;
+var config string messageTargetSweetShot;
+var config string messageTargetBurnerMA;
+var config string messageTargetRocketPodMA;
+var config string messageTargetGrenadeLauncherMA;
+var config string messageTargetBladeMa;
+var config string messageTargetSniperHS;
+
 /** DEFAULT CTF STATS **/
 var config string messageKill;
 var config string messageTeamKill;
@@ -52,6 +65,7 @@ simulated event PostBeginPlay()
 	
 	setDefaultStatMessages();
 	setStatMessages();
+	setTargetStatMessages();
 }
 
 simulated function ClientSaveConfig()
@@ -101,6 +115,22 @@ simulated function setStatMessages()
 	class'xStats.statHS'.default.personalMessage = messageSniperHS;
 }
 
+simulated function setTargetStatMessages()
+{
+	class'xStats.statDistance'.default.targetMessage = messageTargetDistance;
+	class'xStats.statMA'.default.targetMessage = messageTargetSpinfusorMA;
+	class'xStats.statMAPlus'.default.targetMessage = messageTargetSpinfusorMAPlus;
+	class'xStats.statMASupreme'.default.targetMessage = messageTargetSpinfusorMASupreme;
+	class'xStats.statEatDisc'.default.targetMessage = messageTargetSpinfusorEatDisc;
+	class'xStats.statOMG'.default.targetMessage = messageTargetOMG;
+	class'xStats.statSweetShot'.default.targetMessage = messageTargetSweetShot;
+	class'xStats.statPMA'.default.targetMessage = messageTargetBurnerMA;
+	class'xStats.statRocketeer'.default.targetMessage = messageTargetRocketPodMA;
+	class'xStats.statGLMA'.default.targetMessage = messageTargetGrenadeLauncherMA;
+	class'xStats.statEBMA'.default.targetMessage = messageTargetBladeMa;
+	class'xStats.statHS'.default.targetMessage = messageTargetSniperHS;
+}
+
 defaultproperties
 {
 	messageKill				=		"You killed %1"
@@ -135,6 +165,19 @@ defaultproperties
 	messageBladeMa			=		"You midair knifed %1"
 	messageSniperHS			=		"Head Shot!"
 
+	messageTargetDistance			=		"Hit from %1 meters"
+	messageTargetSpinfusorMA		=		"MIDAIR by %1"
+	messageTargetSpinfusorMAPlus	=		"MIDAIR PLUS by %1"
+	messageTargetSpinfusorMASupreme	=		"MIDAIR SUPREME by %1"
+	messageTargetSpinfusorEatDisc	=		"EAT DISC by %1"
+	messageTargetOMG				=		"O M G by %1"
+	messageTargetSweetShot			=		"sweet shot by %1"
+	messageTargetBurnerMA			=		"plasma midaired by %1"
+	messageTargetRocketPodMA		=		"%1 the Rocketeer"
+	messageTargetGrenadeLauncherMA	=		"grenade midaired by %1"
+	messageTargetBladeMa			=		"knifed midaired by %1"
+	messageTargetSniperHS			=		"Head Shot by %1"
+	
 	bNetNotify				=		True
 	NetUpdateFrequency		=		1
 	bStatic					=		False

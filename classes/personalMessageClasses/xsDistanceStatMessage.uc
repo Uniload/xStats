@@ -32,14 +32,14 @@ static function string GetPersonalString(
 
 	if (Switch == 0)
 	{
-		return replaceStr(s.default.personalmessage, OptionalString) @ createScoreString(s, amount);
+		return replaceStr(s.default.personalmessage, OptionalString);
 	}
 
 	// A custom message has been defined
 	if (default.personalMessages.Length < Switch)
 		return "";
 
-	return replaceStr(default.personalMessages[Switch], OptionalString) @ createScoreString(s, amount);
+	return replaceStr(default.personalMessages[Switch], OptionalString);
 
 	return "";
 }

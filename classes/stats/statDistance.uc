@@ -28,4 +28,6 @@ defaultproperties
 	Server_Description				=	"Longest Disc midair"
 	Server_awardDescription			=	"Longest Disc midair"
 	Server_PersonalMessageClass		=	Class'xStats.xsDistanceStatMessage'
+	
+	Server_targetMessageClass		=	class'xStats.xsTargetStatMessage'xsTargetDistanceStatMessage
 }
