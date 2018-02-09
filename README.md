@@ -39,7 +39,7 @@ Features:
 
 The config file will automatically be generated if missing, or load the variables at every Level startup.
 
-Please refer to **[xStats.ini][configfile]** for an overview of the config file.
+Please refer to the **[Client xStats.ini][Client_configfile]** and **[Server xStats.ini][Server_configfile]** for an overview of the config file.
 
 ***
 ## Package Compilation
@@ -66,4 +66,5 @@ ucc.exe editor.stripsourcecommandlet xStats.u
     * Work in progress
 
 <!-- Markdown link & img dfn's -->
-[configfile]: https://github.com/Uniload/xStats/blob/master/xStats.ini
+[Server_configfile]: https://github.com/Uniload/xStats/blob/master/(Server)xStats.ini
+[Client_configfile]: https://github.com/Uniload/xStats/blob/master/(Client)xStats.ini

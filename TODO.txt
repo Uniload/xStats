@@ -1,7 +1,10 @@
--	Increase FlagAttacked / FlagDefended stat radius
--	Stop MA stats from being awarded when a groundhit splashes and kills a low HP target in the air.
-
+==================== REQUIREMENTS ====================
 
 -	TargetStats do NOT work when instigator or target die
 -	Show Stat message for all subclasses of StatClasses.StatDamage
 -	Increase performance replication block reliable / unreliable stat variables etc
+
+====================== EXTRA ======================
+-	Increase FlagAttacked / FlagDefended stat radius
+-	Stop MA stats from being awarded when a groundhit splashes and kills a low HP target in the air.
+-	Dynamic stat generation with stat template?
