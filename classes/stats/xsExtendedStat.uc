@@ -20,35 +20,6 @@ var config string Server_Description;
 var config string Server_awardDescription;
 var config class<MPPersonalMessage> Server_PersonalMessageClass;
 
-/*====================================================================================================
-simulated function Initialize(bool isServer)
-{
-	ServerSaveConfig(isServer);
-	
-	(Self.class).default.minTargetAltitude = Server_minTargetAltitude;
-	(Self.class).default.minDistance = Server_minDistance;
-	(Self.class).default.MaxDistance = Server_MaxDistance;
-	(Self.class).default.minTargetSpeed = Server_MinTargetSpeed;
-	(Self.class).default.maxTargetSpeed = Server_MaxTargetSpeed;
-	(Self.class).default.minDamage = Server_minDamage;
-	(Self.class).default.bAllowTargetInVehicleOrTurret = Server_bAllowTargetInVehicleOrTurret;
-	(Self.class).default.offensePointsPerStat = Server_offensePointsPerStat;
-	(Self.class).default.defensePointsPerStat = Server_defensePointsPerStat;
-	(Self.class).default.stylePointsPerStat = Server_stylePointsPerStat;
-	(Self.class).default.logLevel = Server_logLevel;
-	(Self.class).default.Acronym = Server_Acronym;
-	(Self.class).default.Description = Server_Description;
-	(Self.class).default.awardDescription = Server_awardDescription;
-	(Self.class).default.PersonalMessageClass = Server_PersonalMessageClass;
-}
-
-private function ServerSaveConfig(bool isServer)
-{
-	if (isServer)
-		SaveConfig();
-}
-====================================================================================================*/
-
 static function bool isEligible(Controller Source, Controller Target, float damageAmount)
 {
 	local vector hitLocation, hitNormal, startTrace, endTrace;

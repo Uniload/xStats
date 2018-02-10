@@ -1,7 +1,7 @@
 class StatSettings extends Engine.Actor config(xStats);
 
 // Dynamic arrays CANNOT be replicated
-const STATLIST_MAX_SIZE = 20;
+const STATLIST_MAX_SIZE = 30;
 var private int statListSize;
 var class<xStats.xsExtendedStat> statList[STATLIST_MAX_SIZE];
 
@@ -86,6 +86,11 @@ simulated function SetStatSettings()
 		xsc = statList[i];
 		if (xsc != None)
 		{
+			// Is this the first map of the server ? aka, has this server been restarted ?
+			//	Level = levelIsle0 / levelEmerald1 / levelEmerald2 
+			//if ( last char of Level == 0 && bServer)
+			//	xsc.static.StaticSaveConfig();
+		
 			xsc.default.minTargetAltitude = xsc.default.Server_minTargetAltitude;
 			xsc.default.minDistance = xsc.default.Server_minDistance;
 			xsc.default.MaxDistance = xsc.default.Server_MaxDistance;
@@ -100,9 +105,10 @@ simulated function SetStatSettings()
 			xsc.default.Acronym = xsc.default.Server_Acronym;
 			xsc.default.Description = xsc.default.Server_Description;
 			xsc.default.awardDescription = xsc.default.Server_awardDescription;
-			xsc.default.PersonalMessageClass = xsc.default.Server_PersonalMessageClass;			
-			if (bServer)
-				xsc.static.StaticSaveConfig();
+			xsc.default.PersonalMessageClass = xsc.default.Server_PersonalMessageClass;
+			
+			//if (bServer)
+			//	xsc.static.StaticSaveConfig();
 		}
 	}
 }

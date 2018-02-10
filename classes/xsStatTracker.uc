@@ -167,12 +167,6 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	}
 }
 
-/** Send message to target
-Send target message if applicable
-if (Target != None && s.default.targetMessage != "" && s.default.targetMessageClass != None)
-PlayerController(Target).ReceiveLocalizedMessage(s.default.targetMessageClass, 0, s, C);
-*/
-
 defaultproperties
 {
 	sustainedSpeedCap	=	400
