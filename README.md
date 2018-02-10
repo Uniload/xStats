@@ -7,7 +7,17 @@ Features:
 * Server-Sided stat configuration:
   * Individually configurable stat settings.
   * Dynamic stat loading to avoid compatibility issues.
-* new distance stat.
+* new general distance stat.
+* new disc distance stat.
+* new snipe distance stat.
+* added a cap to max sustained speed stat
+* ...
+
+Extra:
+* Distance values are converted to what I believe are meters (same conversion as distance to flag seen on radar)
+  * vectorToMeter(Vector v, out float distanceInMeters) {distanceInMeters = v * 0.0125}
+  * *vectorToMeter(4000) = 50m*
+  * *vectorToMeter(8000) = 100m*
 
 ***
 ## Installation
