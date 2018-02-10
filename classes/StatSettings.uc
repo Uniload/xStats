@@ -64,15 +64,15 @@ simulated function SetStatSettings()
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
 	
+	log(class'xStats.main'.default.initialStartup);
+	
 	for(i = 0; i < ArrayCount(statList); ++i)
 	{
 		xsc = statList[i];
 		if (xsc != None)
 		{
-			// Is this the first map of the server ? aka, has this server been restarted ?
-			//	Level = levelIsle0 / levelEmerald1 / levelEmerald2 
-			//if ( last char of Level == 0 && bServer)
-			//	xsc.static.StaticSaveConfig();
+			if (bServer)
+				xsc.static.StaticSaveConfig();
 		
 			xsc.default.minTargetAltitude = xsc.default.Server_minTargetAltitude;
 			xsc.default.minDistance = xsc.default.Server_minDistance;
@@ -89,11 +89,9 @@ simulated function SetStatSettings()
 			xsc.default.Description = xsc.default.Server_Description;
 			xsc.default.awardDescription = xsc.default.Server_awardDescription;
 			xsc.default.PersonalMessageClass = xsc.default.Server_PersonalMessageClass;
-			
-			//if (bServer)
-			//	xsc.static.StaticSaveConfig();
 		}
 	}
+	class'xStats.main'.default.initialStartup = False;
 }
 
 defaultproperties

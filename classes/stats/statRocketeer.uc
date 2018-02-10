@@ -19,7 +19,7 @@ defaultproperties
 	Server_minTargetAltitude		=	200
 	Server_minDistance				=	0
 	Server_MaxDistance				=	0
-	Server_MinTargetSpeed 			=	0
+	Server_MinTargetSpeed 			=	150
 	Server_MaxTargetSpeed 			=	0
 	Server_minDamage				=	14
 	Server_bAllowTargetInVehicleOrTurret	=	True

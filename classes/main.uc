@@ -56,7 +56,7 @@ simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
 
-	log("==============" @ VERSION_NAME @ "==============");
+	log("*************" @ VERSION_NAME @ "*************");
 	log("Startup...");
 	log("StatTracker spawning in " $ StatTrackerSpawnDelay $ " seconds...");
 	
@@ -84,7 +84,7 @@ function Timer()
 	xsst.copy(st);
 	
 	ModeInfo(Level.Game).Tracker = xsst;
-	log("==============" @ VERSION_NAME @ "==============");
+	log("*************" @ VERSION_NAME @ "*************");
 	log(VERSION_NAME $ ": Startup completed.");
 }
 
@@ -246,8 +246,6 @@ defaultproperties
 	stat_RPMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeRocketPod'
 	
 	stat_OMG_PDT_LIST(0)	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
-	stat_OMG_PDT_LIST(1)	=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
-	stat_OMG_PDT_LIST(2)	=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
 	stat_SS_PDT_LIST(0)		=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
 	stat_Distance_PDT_LIST(0)= 		Class'EquipmentClasses.ProjectileDamageTypeMortar'
 	
@@ -255,7 +253,7 @@ defaultproperties
 	serverSettingsClass		=		None
 	
 	StatTrackerSpawnDelay	=		5
-	
+
 	bAddToServerPackages	=		True
 	FriendlyName			=		"xStats"
 	Description				=		"Gameplay stat manager"

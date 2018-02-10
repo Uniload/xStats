@@ -17,8 +17,8 @@ defaultproperties
 	PersonalMessageClass=Class'StatClasses.MPPersonalStatMessageDefault'
 	
 	Server_minTargetAltitude		=	200
-	Server_minDistance				=	3000
-	Server_MaxDistance				=	6000
+	Server_minDistance				=	4000
+	Server_MaxDistance				=	8000
 	Server_minDamage				=	44
 	Server_MinTargetSpeed 			=	0
 	Server_MaxTargetSpeed 			=	0

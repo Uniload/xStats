@@ -17,7 +17,7 @@ defaultproperties
 	PersonalMessageClass=Class'xStats.xsDistanceStatMessage'
 	
 	Server_minTargetAltitude		=	0
-	Server_minDistance				=	0
+	Server_minDistance				=	4000
 	Server_MaxDistance				=	0
 	Server_minDamage				=	1
 	Server_MinTargetSpeed 			=	0
