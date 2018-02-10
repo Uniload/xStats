@@ -2,6 +2,8 @@ Class statMASupreme extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statMASupreme"
+
 	minTargetAltitude=200
 	minDistance=6000
 	MaxDistance=12000

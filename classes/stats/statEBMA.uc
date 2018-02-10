@@ -2,6 +2,8 @@ Class statEBMA extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statEBMA"
+
     minTargetAltitude=200
     minDamage=1.000000
     stylePointsPerStat=1

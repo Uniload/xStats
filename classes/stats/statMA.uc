@@ -2,6 +2,8 @@ Class statMA extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statMA"
+
 	minTargetAltitude=200
 	minDistance=0
 	MaxDistance=12000

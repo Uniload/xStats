@@ -2,6 +2,8 @@ Class statMMA extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statMMA"
+
     minTargetAltitude=800
     minDamage=115.000000
     stylePointsPerStat=4

@@ -3,6 +3,7 @@ class ClientStats extends Engine.Actor config(xStats);
 //var private bool bInduceReplication;
 
 var config string messageDistance;
+var config string messageDistanceSpinfusor;
 var config string messageDistanceSniper;
 var config string messageSpinfusorMA;
 var config string messageSpinfusorMAPlus;
@@ -18,6 +19,7 @@ var config string messageBladeMa;
 var config string messageSniperHS;
 
 var config string messageTargetDistance;
+var config string messageTargetDistanceSpinfusor;
 var config string messageTargetDistanceSniper;
 var config string messageTargetSpinfusorMA;
 var config string messageTargetSpinfusorMAPlus;
@@ -112,6 +114,7 @@ simulated function setDefaultStatMessages()
 simulated function setStatMessages()
 {
 	class'xStats.statDistance'.default.personalMessage = messageDistance;
+	class'xStats.statDistanceSpinfusor'.default.personalMessage = messageDistanceSpinfusor;
 	class'xStats.statDistanceSniper'.default.personalMessage = messageDistanceSniper;
 	class'xStats.statMA'.default.personalMessage = messageSpinfusorMA;
 	class'xStats.statMAPlus'.default.personalMessage = messageSpinfusorMAPlus;
@@ -130,6 +133,7 @@ simulated function setStatMessages()
 simulated function setTargetStatMessages()
 {
 	class'xStats.statDistance'.default.targetMessage = messageTargetDistance;
+	class'xStats.statDistanceSpinfusor'.default.targetMessage = messageTargetDistanceSpinfusor;
 	class'xStats.statDistanceSniper'.default.targetMessage = messageTargetDistanceSniper;
 	class'xStats.statMA'.default.targetMessage = messageTargetSpinfusorMA;
 	class'xStats.statMAPlus'.default.targetMessage = messageTargetSpinfusorMAPlus;
@@ -166,6 +170,7 @@ defaultproperties
 	messageDestoryGenerator	=		"You destroyed their generator"
 	messageDestorySensor	=		"You destroyed their sensor"
 	
+	messageDistanceSpinfusor=		"%1 meters"
 	messageDistanceSniper	=		"%1 meters"
 	messageDistance			=		"%1 meters"
 	messageSpinfusorMA		=		"You midair disced %1"
@@ -181,6 +186,7 @@ defaultproperties
 	messageBladeMa			=		"You midair knifed %1"
 	messageSniperHS			=		"Head Shot!"
 
+	messageTargetDistanceSpinfusor	=		"Hit with disc from %1 meters"
 	messageTargetDistanceSniper		=		"Sniped from %1 meters"
 	messageTargetDistance			=		"Hit from %1 meters"
 	messageTargetSpinfusorMA		=		"MIDAIR by %1"

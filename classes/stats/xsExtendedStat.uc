@@ -1,5 +1,7 @@
 class xsExtendedStat extends Gameplay.ExtendedStat;
 
+var string statName;
+
 var config bool Server_notifyTarget;
 var config class<MPPersonalMessage> Server_targetMessageClass;
 var config string targetMessage;
@@ -72,6 +74,8 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 
 defaultproperties
 {
+	statName						=	"Default"
+
 	Server_minTargetAltitude		=	0
 	Server_minDistance				=	0
 	Server_MaxDistance				=	0

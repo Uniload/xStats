@@ -1,8 +1,8 @@
-Class statDistance extends xsExtendedStat config(xStats);
+Class statDistanceSpinfusor extends xStats.statDistance config(xStats);
 
 defaultproperties
 {
-	statName						=	"statDistance"
+	statName						=	"statDistanceSpinfusor"
 
 	minTargetAltitude=0
 	minDistance=0
@@ -26,9 +26,9 @@ defaultproperties
 	Server_defensePointsPerStat		=	0
 	Server_stylePointsPerStat		=	0
 	Server_logLevel					=	3
-	Server_Acronym					=	"DMA"
-	Server_Description				=	"Longest hit"
-	Server_awardDescription			=	"Longest hit"
+	Server_Acronym					=	"DMAD"
+	Server_Description				=	"Longest Disc midair"
+	Server_awardDescription			=	"Longest Disc midair"
 	Server_PersonalMessageClass		=	Class'xStats.xsDistanceStatMessage'
 	
 	Server_targetMessageClass		=	class'xStats.xsTargetDistanceStatMessage'

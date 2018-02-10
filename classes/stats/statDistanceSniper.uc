@@ -2,6 +2,8 @@ Class statDistanceSniper extends xStats.statDistance config(xStats);
 
 defaultproperties
 {
+	statName						=	"statDistanceSniper"
+
 	minTargetAltitude=0
 	minDistance=0
 	MaxDistance=0

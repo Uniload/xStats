@@ -7,6 +7,7 @@ var class<xStats.xsExtendedStat> statList[STATLIST_MAX_SIZE];
 
 var private bool bServer;
 var config int sustainedSpeedCap;
+var config float timeBetweenDistanceStats;
 
 replication
 {
@@ -20,14 +21,14 @@ function Initialize()
 	SetStatSettings();
 }
 
-simulated function PostBeginPlay()
+simulated event PostBeginPlay()
 {
 	bServer = (Level.NetMode != NM_Client);
 }
 
 /**	When Clients receive replicated content, this function will be called.
  */
-simulated function PostNetReceive()
+simulated event PostNetReceive()
 {
 	SetStatSettings();
 }
@@ -43,40 +44,22 @@ function bool addToStatList(class<xStats.xsExtendedStat> customStat)
 	if (customStat == None || (statListSize-1) > STATLIST_MAX_SIZE)
 		return False;
 	
+	log(customStat.default.statName);
+	
 	statList[statListSize] = customStat;
 	statListSize += 1;
 	return True;
 }
 
-/*
-simulated function SetStatSettings()
+simulated function notifyStatAmt()
 {
-	local bool b;
-	local int i;
-	
-	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
-	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
-	
-	b = Level.NetMode != NM_Client
-	
-	for(i = 0; i < ArrayCount(statList); ++i)
-	{
-		if (statList[i] != None)
-		{
-			// This is so wrong
-			(new statList[i]).Initialize( b );
-		}
-	}
+	log("Loaded" @ statListSize @ "out of MAX" @ STATLIST_MAX_SIZE @ "stats");
 }
-*/
 
 simulated function SetStatSettings()
 {
 	local class<xStats.xsExtendedStat> xsc;
 	local int i;
-	
-	log("Called by Server?");
-	log(bServer);
 	
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
@@ -115,7 +98,8 @@ simulated function SetStatSettings()
 
 defaultproperties
 {
-	sustainedSpeedCap	=	400
+	sustainedSpeedCap		=		400
+	timeBetweenDistanceStats=		1.000000
 	
 	bServer					=		False
 	statListSize			=		0

@@ -2,6 +2,8 @@ Class statRocketeer extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statRocketeer"
+
     minTargetSpeed=115.000000
     minDistance=750
     minDamage=45.000000
@@ -19,7 +21,7 @@ defaultproperties
 	Server_MaxDistance				=	0
 	Server_MinTargetSpeed 			=	0
 	Server_MaxTargetSpeed 			=	0
-	Server_minDamage				=	20
+	Server_minDamage				=	14
 	Server_bAllowTargetInVehicleOrTurret	=	True
 	Server_offensePointsPerStat		=	0
 	Server_defensePointsPerStat		=	0

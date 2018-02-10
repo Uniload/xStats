@@ -1,16 +1,10 @@
 ==================== REQUIREMENTS ====================
 
--	Think about the implications of /*if ((Level.TimeSeconds - sd.lastAwardTimestamp) > 1)*/ in xsStatTracker)
-
 -	Find a workaround to StaticSaveConfig / Maybe GlobalConfig ?
 
 	NOTE: StaticSaveConfig() will save the defaultproperties in xStats.ini at server startup. any changes made to xStats.ini
 	while the server is running will be overwritten by wathever value was declared at startup. Changes to the config file would
 	therefore only work if the server is turned off. ( workaround: Only call StaticSaveConfig() if xStats.ini is missing?)
-
--	Show how many stats can still be added (STATLIST_MAX_SIZE - statListSize)
-
--	Add Spinfusor distance stat only, make statDistance (add class variable to determine time before it can be awarded again?) for general use
 
 -	Increase performance replication block reliable / unreliable stat variables etc
 -	Fix stat settings before release

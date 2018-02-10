@@ -2,6 +2,8 @@ Class statSweetShot extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statSweetShot"
+
 	minTargetAltitude=0
 	minDistance=5000
 	MaxDistance=0

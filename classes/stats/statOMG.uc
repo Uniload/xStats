@@ -2,6 +2,8 @@ Class statOMG extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statOMG"
+
 	minTargetAltitude=200
 	minDistance=30000
 	MaxDistance=900000

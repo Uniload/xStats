@@ -1,6 +1,8 @@
 class xsStatTracker extends Gameplay.StatTracker config;
 
 var int sustainedSpeedCap;
+var private float timeLastDistanceStat;
+var float timeBetweenDistanceStats;
 
 /**
  * Did not manage to make Spawn(class,x,x,x,template) work.
@@ -104,8 +106,9 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 			}
 		}
 		// This is used to avoid displaying distance stat multiple times
-		else /*if ((Level.TimeSeconds - sd.lastAwardTimestamp) > 1)*/
+		else if ((Level.TimeSeconds - timeLastDistanceStat) > timeBetweenDistanceStats)
 		{
+			timeLastDistanceStat = Level.TimeSeconds;
 			if (target != None)
 			{
 				PC.ReceiveLocalizedMessage(s.default.personalMessageClass, 0, s, target.playerReplicationInfo,, string(value));
@@ -170,4 +173,6 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 defaultproperties
 {
 	sustainedSpeedCap	=	400
+	timeLastDistanceStat = 0.000000
+	timeBetweenDistanceStats = 1.000000
 }

@@ -2,6 +2,8 @@ Class statGLMA extends xsExtendedStat config(xStats);
 
 defaultproperties
 {
+	statName						=	"statGLMA"
+
     minTargetAltitude=200
     minDamage=44.000000
     stylePointsPerStat=2
