@@ -23,6 +23,7 @@ var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_GLMA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MMA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_PMA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_RPMA_PDT;
+
 var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_SS_PDT_LIST;
 var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_OMG_PDT_LIST;
 var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_Distance_PDT_LIST;
@@ -96,7 +97,7 @@ function AddServerPackage(string Package)
 	
 	AddServerPackage = true;
 	
-	for(i = 0; i < class'Engine.GameEngine'.default.ServerPackages.Length; i++)
+	for(i = 0; i < class'Engine.GameEngine'.default.ServerPackages.Length; ++i)
 	{
 		if (class'Engine.GameEngine'.default.ServerPackages[i] == Package)
 		{
@@ -209,6 +210,12 @@ simulated function ModifyStats()
 			++EXstatCount;
 		}
 		
+		// StatDISTANCE sniper
+		serverSettingsClass.addToStatList(Class'statDistanceSniper');
+		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_HS_PDT;
+		M.extendedProjectileDamageStats[EXstatCount].extendedStatClass = Class'statDistanceSniper';
+		++EXstatCount;
+		
 		// PMA
 		serverSettingsClass.addToStatList(Class'statPMA');
 		M.extendedProjectileDamageStats[EXstatCount].damageTypeClass = stat_PMA_PDT;
@@ -286,7 +293,6 @@ defaultproperties
 	stat_Distance_PDT_LIST(0)= 		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_Distance_PDT_LIST(1)= 		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
 	stat_Distance_PDT_LIST(2)= 		Class'EquipmentClasses.ProjectileDamageTypeMortar'
-	stat_Distance_PDT_LIST(3)= 		Class'promod_v1rc7_b3.promodSniperProjectileDamageType'
 	
 	clientStatsClass		=		None
 	serverSettingsClass		=		None

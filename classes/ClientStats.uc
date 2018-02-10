@@ -1,6 +1,9 @@
 class ClientStats extends Engine.Actor config(xStats);
 
+//var private bool bInduceReplication;
+
 var config string messageDistance;
+var config string messageDistanceSniper;
 var config string messageSpinfusorMA;
 var config string messageSpinfusorMAPlus;
 var config string messageSpinfusorMASupreme;
@@ -10,10 +13,12 @@ var config string messageSweetShot;
 var config string messageBurnerMA;
 var config string messageRocketPodMA;
 var config string messageGrenadeLauncherMA;
+var config string messageMortarMa;
 var config string messageBladeMa;
 var config string messageSniperHS;
 
 var config string messageTargetDistance;
+var config string messageTargetDistanceSniper;
 var config string messageTargetSpinfusorMA;
 var config string messageTargetSpinfusorMAPlus;
 var config string messageTargetSpinfusorMASupreme;
@@ -23,6 +28,7 @@ var config string messageTargetSweetShot;
 var config string messageTargetBurnerMA;
 var config string messageTargetRocketPodMA;
 var config string messageTargetGrenadeLauncherMA;
+var config string messageTargetMortarMa;
 var config string messageTargetBladeMa;
 var config string messageTargetSniperHS;
 
@@ -51,19 +57,24 @@ var config string messageDestorySensor;
 
 // ============================================
 
-simulated event PreBeginPlay()
-{
-	Super.PreBeginPlay();
-	//log("xStats_b1: SPAWNING client stats");
-}
-
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
-
+	
+	if(Level.NetMode != NM_Client)
+		Disable('Tick');
+	
 	ClientSaveConfig();
 	
 	setDefaultStatMessages();
+	setStatMessages();
+	setTargetStatMessages();
+}
+
+event Tick(float DeltaTime)
+{
+	log(DeltaTime);
+    setDefaultStatMessages();
 	setStatMessages();
 	setTargetStatMessages();
 }
@@ -76,7 +87,6 @@ simulated function ClientSaveConfig()
 
 simulated function setDefaultStatMessages()
 {
-
 	class'StatClasses.killStat'.default.personalMessage = messageKill;
 	class'StatClasses.killStatCTF'.default.personalMessage = messageKill;
 	class'StatClasses.killStatArena'.default.personalMessage = messageKill;
@@ -102,6 +112,7 @@ simulated function setDefaultStatMessages()
 simulated function setStatMessages()
 {
 	class'xStats.statDistance'.default.personalMessage = messageDistance;
+	class'xStats.statDistanceSniper'.default.personalMessage = messageDistanceSniper;
 	class'xStats.statMA'.default.personalMessage = messageSpinfusorMA;
 	class'xStats.statMAPlus'.default.personalMessage = messageSpinfusorMAPlus;
 	class'xStats.statMASupreme'.default.personalMessage = messageSpinfusorMASupreme;
@@ -113,11 +124,13 @@ simulated function setStatMessages()
 	class'xStats.statGLMA'.default.personalMessage = messageGrenadeLauncherMA;
 	class'xStats.statEBMA'.default.personalMessage = messageBladeMa;
 	class'xStats.statHS'.default.personalMessage = messageSniperHS;
+	class'xStats.statMMA'.default.personalMessage = messageMortarMa;
 }
 
 simulated function setTargetStatMessages()
 {
 	class'xStats.statDistance'.default.targetMessage = messageTargetDistance;
+	class'xStats.statDistanceSniper'.default.targetMessage = messageTargetDistanceSniper;
 	class'xStats.statMA'.default.targetMessage = messageTargetSpinfusorMA;
 	class'xStats.statMAPlus'.default.targetMessage = messageTargetSpinfusorMAPlus;
 	class'xStats.statMASupreme'.default.targetMessage = messageTargetSpinfusorMASupreme;
@@ -129,6 +142,7 @@ simulated function setTargetStatMessages()
 	class'xStats.statGLMA'.default.targetMessage = messageTargetGrenadeLauncherMA;
 	class'xStats.statEBMA'.default.targetMessage = messageTargetBladeMa;
 	class'xStats.statHS'.default.targetMessage = messageTargetSniperHS;
+	class'xStats.statMMA'.default.targetMessage = messageTargetMortarMa;
 }
 
 defaultproperties
@@ -152,6 +166,7 @@ defaultproperties
 	messageDestoryGenerator	=		"You destroyed their generator"
 	messageDestorySensor	=		"You destroyed their sensor"
 	
+	messageDistanceSniper	=		"%1 meters"
 	messageDistance			=		"%1 meters"
 	messageSpinfusorMA		=		"You midair disced %1"
 	messageSpinfusorMAPlus	=		"+ MIDAIR PLUS +"
@@ -162,9 +177,11 @@ defaultproperties
 	messageBurnerMA			=		"You plasma midaired %1"
 	messageRocketPodMA		=		"+ Rocketeer +"
 	messageGrenadeLauncherMA=		"You grenade midaired %1"
+	messageMortarMa			=		"You mortar midaired %1"
 	messageBladeMa			=		"You midair knifed %1"
 	messageSniperHS			=		"Head Shot!"
 
+	messageTargetDistanceSniper		=		"Sniped from %1 meters"
 	messageTargetDistance			=		"Hit from %1 meters"
 	messageTargetSpinfusorMA		=		"MIDAIR by %1"
 	messageTargetSpinfusorMAPlus	=		"MIDAIR PLUS by %1"
@@ -175,6 +192,7 @@ defaultproperties
 	messageTargetBurnerMA			=		"plasma midaired by %1"
 	messageTargetRocketPodMA		=		"%1 the Rocketeer"
 	messageTargetGrenadeLauncherMA	=		"grenade midaired by %1"
+	messageTargetMortarMa			=		"Mortar midaired by %1"
 	messageTargetBladeMa			=		"knifed midaired by %1"
 	messageTargetSniperHS			=		"Head Shot by %1"
 	

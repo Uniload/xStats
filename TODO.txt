@@ -1,8 +1,14 @@
 ==================== REQUIREMENTS ====================
 
--	TargetStats do NOT work when instigator or target die
--	Show Stat message for all subclasses of StatClasses.StatDamage
+-	Find a workaround to StaticSaveConfig 
+
+	NOTE: StaticSaveConfig() will save the defaultproperties in xStats.ini at server startup. any changes made to xStats.ini
+	while the server is running will be overwritten by wathever value was declared at startup. Changes to the config file would
+	therefore only work if the server is turned off. ( workaround: Only call StaticSaveConfig() if xStats.ini is missing?)
+
+-	Create separate sniper distance stat
 -	Increase performance replication block reliable / unreliable stat variables etc
+-	Fix stat settings before release
 
 ====================== EXTRA ======================
 -	Increase FlagAttacked / FlagDefended stat radius

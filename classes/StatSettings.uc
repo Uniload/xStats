@@ -1,9 +1,11 @@
 class StatSettings extends Engine.Actor config(xStats);
 
 // Dynamic arrays CANNOT be replicated
-const STATLIST_SIZE = 20;
-var class<xStats.xsExtendedStat> statList[STATLIST_SIZE];
- 
+const STATLIST_MAX_SIZE = 20;
+var private int statListSize;
+var class<xStats.xsExtendedStat> statList[STATLIST_MAX_SIZE];
+
+var private bool bServer;
 var config int sustainedSpeedCap;
 
 replication
@@ -12,86 +14,109 @@ replication
         statList;
 }
 
-simulated event PreBeginPlay()
-{
-	Super.PreBeginPlay();
-	//log("xStats_b1: SPAWNING server settings");
-}
-
-simulated event PostBeginPlay()
-{
-	Super.PostBeginPlay();
-}
-
 function Initialize()
 {
 	ServerSaveConfig();
 	SetStatSettings();
 }
 
+simulated function PostBeginPlay()
+{
+	bServer = (Level.NetMode != NM_Client);
+}
+
 /**	When Clients receive replicated content, this function will be called.
  */
 simulated function PostNetReceive()
 {
-	//log("POST NET RECEIVE STAT SETTINGS ( SERVER CLASS )");
 	SetStatSettings();
 }
 
 function ServerSaveConfig()
 {
-	if (Level.NetMode != NM_Client)
+	if (bServer)
 		SaveConfig();
 }
 
 function bool addToStatList(class<xStats.xsExtendedStat> customStat)
 {
-	local int i;
-	
-	if (customStat == None)
+	if (customStat == None || (statListSize-1) > STATLIST_MAX_SIZE)
 		return False;
 	
-	for (i = 0; i <	ArrayCount(statList); i++)
-	{
-		if ( statList[i] == None )
-		{
-			statlist[i] = customStat;
-			return True;
-		}
-	}
-	return False;
+	statList[statListSize] = customStat;
+	statListSize += 1;
+	return True;
 }
 
+/*
 simulated function SetStatSettings()
 {
-	local Gameplay.ModeInfo M;
+	local bool b;
 	local int i;
-	
-	// xStats.xsExtendedStat classes do not have access to "Level.NetMode"
-	// Because I want to check: if (Level.NetMode == NM_Client), I can simulate the the same
-	// outcome by calling ModeInfo(Level.Game), that will be None if this code is run on a client.
-	M = ModeInfo(Level.Game);
 	
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
 	
-	for(i = 0; i < ArrayCount(statList); i++)
+	b = Level.NetMode != NM_Client
+	
+	for(i = 0; i < ArrayCount(statList); ++i)
 	{
 		if (statList[i] != None)
 		{
-			(new statList[i]).Initialize( M );
+			// This is so wrong
+			(new statList[i]).Initialize( b );
 		}
 	}
+}
+*/
+
+simulated function SetStatSettings()
+{
+	local class<xStats.xsExtendedStat> xsc;
+	local int i;
 	
+	log("Called by Server?");
+	log(bServer);
+	
+	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
+	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
+	
+	for(i = 0; i < ArrayCount(statList); ++i)
+	{
+		xsc = statList[i];
+		if (xsc != None)
+		{
+			xsc.default.minTargetAltitude = xsc.default.Server_minTargetAltitude;
+			xsc.default.minDistance = xsc.default.Server_minDistance;
+			xsc.default.MaxDistance = xsc.default.Server_MaxDistance;
+			xsc.default.minTargetSpeed = xsc.default.Server_MinTargetSpeed;
+			xsc.default.maxTargetSpeed = xsc.default.Server_MaxTargetSpeed;
+			xsc.default.minDamage = xsc.default.Server_minDamage;
+			xsc.default.bAllowTargetInVehicleOrTurret = xsc.default.Server_bAllowTargetInVehicleOrTurret;
+			xsc.default.offensePointsPerStat = xsc.default.Server_offensePointsPerStat;
+			xsc.default.defensePointsPerStat = xsc.default.Server_defensePointsPerStat;
+			xsc.default.stylePointsPerStat = xsc.default.Server_stylePointsPerStat;
+			xsc.default.logLevel = xsc.default.Server_logLevel;
+			xsc.default.Acronym = xsc.default.Server_Acronym;
+			xsc.default.Description = xsc.default.Server_Description;
+			xsc.default.awardDescription = xsc.default.Server_awardDescription;
+			xsc.default.PersonalMessageClass = xsc.default.Server_PersonalMessageClass;			
+			if (bServer)
+				xsc.static.StaticSaveConfig();
+		}
+	}
 }
 
 defaultproperties
 {
 	sustainedSpeedCap	=	400
 	
+	bServer					=		False
+	statListSize			=		0
 	bNetNotify				=		True
 	NetUpdateFrequency		=		1
 	bStatic					=		False
 	bNoDelete				=		False
-	bAlwaysRelevant			=		False
+	bAlwaysRelevant			=		True
 	netPriority				=		1
 }

@@ -54,7 +54,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	if (s.default.logLevel > globalLogLevel)
 		return;
 	
-	bDistanceStat = (s == class'xStats.statDistance');
+	bDistanceStat = ClassIsChildOf(s, class'xStats.statDistance');
 	
 	if (bDistanceStat)
 	{
@@ -84,7 +84,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	if (ClassIsChildOf(s, class'xStats.xsExtendedStat'))
 		ES = class<xStats.xsExtendedStat>(s);
 	
-	log(ClassIsChildOf(s, class'xStats.xsExtendedStat'));
+	//log(ClassIsChildOf(s, class'xStats.xsExtendedStat'));
 	
 	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
 	{
@@ -104,7 +104,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 			}
 		}
 		// This is used to avoid displaying distance stat multiple times
-		else if ((Level.TimeSeconds - sd.lastAwardTimestamp) > 1)
+		else /*if ((Level.TimeSeconds - sd.lastAwardTimestamp) > 1)*/
 		{
 			if (target != None)
 			{

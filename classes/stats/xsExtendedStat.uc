@@ -20,10 +20,10 @@ var config string Server_Description;
 var config string Server_awardDescription;
 var config class<MPPersonalMessage> Server_PersonalMessageClass;
 
-// This class doesnt know Level.NetMode, so I have to improvise
-simulated function Initialize(Gameplay.ModeInfo I)
+/*====================================================================================================
+simulated function Initialize(bool isServer)
 {
-	ServerSaveConfig(I);
+	ServerSaveConfig(isServer);
 	
 	(Self.class).default.minTargetAltitude = Server_minTargetAltitude;
 	(Self.class).default.minDistance = Server_minDistance;
@@ -42,11 +42,12 @@ simulated function Initialize(Gameplay.ModeInfo I)
 	(Self.class).default.PersonalMessageClass = Server_PersonalMessageClass;
 }
 
-private function ServerSaveConfig(Gameplay.ModeInfo I)
+private function ServerSaveConfig(bool isServer)
 {
-	if ( I != None )
+	if (isServer)
 		SaveConfig();
 }
+====================================================================================================*/
 
 static function bool isEligible(Controller Source, Controller Target, float damageAmount)
 {
