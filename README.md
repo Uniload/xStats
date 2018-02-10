@@ -14,7 +14,7 @@ Features:
 * ...
 
 Extra:
-* Distance values are converted to what I believe are meters (same conversion as distance to flag seen on radar)
+* Distance values are converted to what I believe are meters (could be yards?) (same conversion as distance to flag seen on radar)
   * vectorToMeter(Vector v, out float distanceInMeters) {distanceInMeters = v * 0.0125}
   * *vectorToMeter(4000) = 50m*
   * *vectorToMeter(8000) = 100m*
