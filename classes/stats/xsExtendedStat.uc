@@ -29,7 +29,7 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 	local Character targetCharacter;
 	//local PlayerController pc;
 	local PlayerCharacterController pcc;
-
+	
 	if (Target == None || Source == None)
 		return false;
 

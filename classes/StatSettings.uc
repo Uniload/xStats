@@ -64,8 +64,6 @@ simulated function SetStatSettings()
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
 	
-	log(class'xStats.main'.default.initialStartup);
-	
 	for(i = 0; i < ArrayCount(statList); ++i)
 	{
 		xsc = statList[i];
@@ -91,7 +89,6 @@ simulated function SetStatSettings()
 			xsc.default.PersonalMessageClass = xsc.default.Server_PersonalMessageClass;
 		}
 	}
-	class'xStats.main'.default.initialStartup = False;
 }
 
 defaultproperties
