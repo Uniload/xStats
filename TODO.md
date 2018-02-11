@@ -6,10 +6,11 @@
 >	therefore only work if the server is turned off. ( workaround: Only call StaticSaveConfig() if xStats.ini is missing?)
 
 * Increase performance of replication block; reliable / unreliable, stat variables, etc
-  * Replication block conditionals
+  * PostNetBeginPlay()
+  * Replication block conditionals
   * Variable replication
   * Usage of sleep()
-  * Reduce new() / spawn()
+  * Reduce new() / spawn()
 
 * Thoroughly test mod:
   * Demo playback
