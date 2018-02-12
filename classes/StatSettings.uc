@@ -59,7 +59,13 @@ simulated function notifyStatAmt()
 simulated function SetStatSettings()
 {
 	local class<xStats.xsExtendedStat> xsc;
+	local bool b;
 	local int i;
+	
+	b = (Right(ModeInfo(Level.Game), 1) == "0");
+	
+	log(b);
+	log(Level.Game);
 	
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
