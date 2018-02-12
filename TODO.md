@@ -9,10 +9,10 @@
 
 * Increase performance of replication block; reliable / unreliable, stat variables, etc
   * PostNetBeginPlay
-  * Replication block conditionals
+  * Replication block conditionals
   * Variable replication
-  * Usage of sleep()
-  * Reduce new() / spawn()
+  * Usage of sleep()
+  * Reduce new() / spawn()
 
 * Thoroughly test mod:
   * Demo playback
