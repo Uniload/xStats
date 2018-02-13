@@ -165,8 +165,6 @@ simulated function ModifyStats()
 
 		log("Loading game stats:");
 		
-		/*
-		
 		// Head Shot
 		serverSettingsClass.addToStatList(Class'StatHS');
 		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
@@ -175,19 +173,16 @@ simulated function ModifyStats()
 		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats.xsExtendedStat';
 		++statCount;		
 		
-		*/
-		
-		//RegisterExtendedStat(M, stat_EBMA_PDT, Class'statEBMA');
+		RegisterExtendedStat(M, stat_EBMA_PDT, Class'statEBMA');
 
-		//RegisterExtendedStat(M, stat_MA_PDT, Class'statMA');
+		RegisterExtendedStat(M, stat_MA_PDT, Class'statMA');
 
-		//RegisterExtendedStat(M, stat_MAp_PDT, Class'statMAPlus');
+		RegisterExtendedStat(M, stat_MAp_PDT, Class'statMAPlus');
 
-		//RegisterExtendedStat(M, stat_MApp_PDT, Class'statMASupreme');
+		RegisterExtendedStat(M, stat_MApp_PDT, Class'statMASupreme');
 
-		//RegisterExtendedStat(M, stat_ED_PDT, Class'statEatDisc');
+		RegisterExtendedStat(M, stat_ED_PDT, Class'statEatDisc');
 
-		/*
 		for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
 		{
 			//Only add one stat even if multiple PDT's trigger it 
@@ -195,19 +190,17 @@ simulated function ModifyStats()
 				RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], Class'statDistance');
 			else RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], None );
 		}
-		*/
 			
 		RegisterExtendedStat(M, stat_MA_PDT, Class'statDistanceSpinfusor');
 
 		RegisterExtendedStat(M, stat_HS_PDT, Class'statDistanceSniper');
 
-		//RegisterExtendedStat(M, stat_PMA_PDT, Class'statPMA');
+		RegisterExtendedStat(M, stat_PMA_PDT, Class'statPMA');
 
-		//RegisterExtendedStat(M, stat_GLMA_PDT, Class'statGLMA');
+		RegisterExtendedStat(M, stat_GLMA_PDT, Class'statGLMA');
 
-		//RegisterExtendedStat(M, stat_MMA_PDT, Class'statMMA');
+		RegisterExtendedStat(M, stat_MMA_PDT, Class'statMMA');
 		
-		/*
 		for(i=0; i < stat_SS_PDT_LIST.Length ;i++)
 		{
 			if (i==0)
@@ -221,9 +214,8 @@ simulated function ModifyStats()
 				RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], Class'statOMG');
 			RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], None );
 		}
-		*/
 		
-		//RegisterExtendedStat(M, stat_RPMA_PDT, Class'statRocketeer');
+		RegisterExtendedStat(M, stat_RPMA_PDT, Class'statRocketeer');
 		
 		serverSettingsClass.notifyStatAmt();
 	}
