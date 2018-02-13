@@ -59,13 +59,7 @@ simulated function notifyStatAmt()
 simulated function SetStatSettings()
 {
 	local class<xStats.xsExtendedStat> xsc;
-	local bool b;
 	local int i;
-	
-	b = (Right(ModeInfo(Level.Game), 1) == "0");
-	
-	log(b);
-	log(Level.Game);
 	
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
@@ -75,9 +69,6 @@ simulated function SetStatSettings()
 		xsc = statList[i];
 		if (xsc != None)
 		{
-			if (bServer)
-				xsc.static.StaticSaveConfig();
-		
 			xsc.default.minTargetAltitude = xsc.default.Server_minTargetAltitude;
 			xsc.default.minDistance = xsc.default.Server_minDistance;
 			xsc.default.MaxDistance = xsc.default.Server_MaxDistance;
@@ -93,6 +84,9 @@ simulated function SetStatSettings()
 			xsc.default.Description = xsc.default.Server_Description;
 			xsc.default.awardDescription = xsc.default.Server_awardDescription;
 			xsc.default.PersonalMessageClass = xsc.default.Server_PersonalMessageClass;
+			
+			if (bServer)
+				xsc.static.StaticSaveConfig();
 		}
 	}
 }

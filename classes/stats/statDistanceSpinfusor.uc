@@ -1,4 +1,4 @@
-Class statDistanceSpinfusor extends xStats.statDistance config(xStats);
+Class statDistanceSpinfusor extends statDistance config(xStats);
 
 defaultproperties
 {

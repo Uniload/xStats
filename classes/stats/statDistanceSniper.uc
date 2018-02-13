@@ -1,4 +1,4 @@
-Class statDistanceSniper extends xStats.statDistance config(xStats);
+Class statDistanceSniper extends statDistance config(xStats);
 
 defaultproperties
 {
