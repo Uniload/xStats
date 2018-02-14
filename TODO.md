@@ -1,7 +1,5 @@
 # REQUIREMENTS V1
 
-* Figure out why snipe distance and disc distance are not showing ingame (highscore screen) while global distance is.
-
 * Find a workaround to StaticSaveConfig / Maybe GlobalConfig ?
 >	StaticSaveConfig() will save the defaultproperties in xStats.ini at server startup. any changes made to xStats.ini
 >	while the server is running will be overwritten by wathever value was declared at startup. Changes to the config file would
