@@ -60,15 +60,16 @@ simulated function SetStatSettings()
 {
 	local class<xStats.xsExtendedStat> xsc;
 	local int i;
-	
+
 	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
+
 	
 	for(i = 0; i < ArrayCount(statList); ++i)
 	{
 		xsc = statList[i];
 		if (xsc != None)
-		{
+		{		
 			xsc.default.minTargetAltitude = xsc.default.Server_minTargetAltitude;
 			xsc.default.minDistance = xsc.default.Server_minDistance;
 			xsc.default.MaxDistance = xsc.default.Server_MaxDistance;
@@ -84,9 +85,6 @@ simulated function SetStatSettings()
 			xsc.default.Description = xsc.default.Server_Description;
 			xsc.default.awardDescription = xsc.default.Server_awardDescription;
 			xsc.default.PersonalMessageClass = xsc.default.Server_PersonalMessageClass;
-			
-			if (bServer)
-				xsc.static.StaticSaveConfig();
 		}
 	}
 }
@@ -95,7 +93,7 @@ defaultproperties
 {
 	sustainedSpeedCap		=		400
 	timeBetweenDistanceStats=		1.000000
-	
+
 	bServer					=		False
 	statListSize			=		0
 	bNetNotify				=		True

@@ -57,8 +57,8 @@ simulated event PostBeginPlay()
 	Super.PostBeginPlay();
 
 	log("*************" @ VERSION_NAME @ "*************");
+	log("StatTracker will spawn in " $ StatTrackerSpawnDelay $ " seconds...");
 	log("Startup...");
-	log("StatTracker spawning in " $ StatTrackerSpawnDelay $ " seconds...");
 	
 	ServerSaveConfig();
 	
@@ -66,7 +66,7 @@ simulated event PostBeginPlay()
 	clientStatsClass = spawn(class'xStats.ClientStats');
 	
 	ModifyStats();
-	
+
 	serverSettingsClass.Initialize();
 	
 	SetTimer(StatTrackerSpawnDelay, False);
@@ -124,7 +124,7 @@ simulated function RegisterExtendedStat(ModeInfo M, class<ProjectileDamageTypeDe
 {
 	local int index;
 	
-	if(stat != None)
+	if(stat != None && PDT != None)
 	{
 		index = M.extendedProjectileDamageStats.Length;
 		M.extendedProjectileDamageStats.Insert(index, 1);
@@ -217,6 +217,7 @@ simulated function ModifyStats()
 		
 		RegisterExtendedStat(M, stat_RPMA_PDT, Class'statRocketeer');
 		
+		//Server logging purposes
 		serverSettingsClass.notifyStatAmt();
 	}
 }
@@ -247,7 +248,7 @@ defaultproperties
 	
 	stat_OMG_PDT_LIST(0)	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_SS_PDT_LIST(0)		=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
-	stat_Distance_PDT_LIST(0)= 		Class'EquipmentClasses.ProjectileDamageTypeMortar'
+	stat_Distance_PDT_LIST(0)= 		None
 	
 	clientStatsClass		=		None
 	serverSettingsClass		=		None
