@@ -3,7 +3,7 @@ class StatSettings extends Engine.Actor config(xStats);
 // Dynamic arrays CANNOT be replicated
 const STATLIST_MAX_SIZE = 30;
 var private int statListSize;
-var class<xStats.xsExtendedStat> statList[STATLIST_MAX_SIZE];
+var class<xStats_b1.xsExtendedStat> statList[STATLIST_MAX_SIZE];
 
 var private bool bServer;
 var config int sustainedSpeedCap;
@@ -39,7 +39,7 @@ function ServerSaveConfig()
 		SaveConfig();
 }
 
-function bool addToStatList(class<xStats.xsExtendedStat> customStat)
+function bool addToStatList(class<xStats_b1.xsExtendedStat> customStat)
 {
 	if (customStat == None || (statListSize-1) > STATLIST_MAX_SIZE)
 		return False;
@@ -58,11 +58,11 @@ simulated function notifyStatAmt()
 
 simulated function SetStatSettings()
 {
-	local class<xStats.xsExtendedStat> xsc;
+	local class<xStats_b1.xsExtendedStat> xsc;
 	local int i;
 
-	class'xStats.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
-	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats.xsNoScoreStatMessage';
+	class'xStats_b1.xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
+	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xStats_b1.xsNoScoreStatMessage';
 
 	
 	for(i = 0; i < ArrayCount(statList); ++i)

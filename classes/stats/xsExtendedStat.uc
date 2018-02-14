@@ -92,6 +92,6 @@ defaultproperties
 	Server_awardDescription			=	"Default"
 	Server_PersonalMessageClass		=	Class'StatClasses.MPPersonalStatMessageDefault'
 	Server_notifyTarget				=	True
-	Server_targetMessageClass		=	class'xStats.xsTargetStatMessage'
+	Server_targetMessageClass		=	class'xStats_b1.xsTargetStatMessage'
 	targetMessage					=	"Hit by %1"
 }

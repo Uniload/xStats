@@ -9,11 +9,11 @@ static function string GetPersonalString(
 	optional String OptionalString
 	)
 {
-	local class<xStats.xsExtendedStat> s;
+	local class<xStats_b1.xsExtendedStat> s;
 	local int amount;
 
 	// Expect Related1 to be a stat (required)
-	s = class<xStats.xsExtendedStat>(Related1);
+	s = class<xStats_b1.xsExtendedStat>(Related1);
 	if (s == None)
 		return "";
 
