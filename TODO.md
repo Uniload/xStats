@@ -1,8 +1,9 @@
 # REQUIREMENTS V1
+  
+### Beta_v2
 
-* Figure out why snipe distance and disc distance are not showing ingame (highscore screen) while global distance is.
-
-* Find a workaround to StaticSaveConfig / Maybe GlobalConfig ?
+* Auto generate StatSettings config file
+> Find a workaround to StaticSaveConfig / Maybe GlobalConfig.
 >	StaticSaveConfig() will save the defaultproperties in xStats.ini at server startup. any changes made to xStats.ini
 >	while the server is running will be overwritten by wathever value was declared at startup. Changes to the config file would
 >	therefore only work if the server is turned off. ( workaround: Only call StaticSaveConfig() if xStats.ini is missing?) 
@@ -20,6 +21,7 @@
 
 # REQUIREMENTS V1+
 
+* Implement teamkill / friendlyfire target message
 * Implement/fix default stats
   * Increase FlagAttacked / FlagDefended stat radius
   * Fix BB stat
