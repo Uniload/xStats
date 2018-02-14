@@ -18,6 +18,7 @@
 
 # REQUIREMENTS V1+
 
+* Implement teamkill / friendlyfire target message
 * Implement/fix default stats
   * Increase FlagAttacked / FlagDefended stat radius
   * Fix BB stat
