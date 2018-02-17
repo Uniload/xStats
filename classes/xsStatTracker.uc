@@ -44,7 +44,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	local PlayerController PC;
 	local int relativeDistance;
 	local bool bDistanceStat;
-	local class<xStats_b1.xsExtendedStat> ES;
+	local class<xsExtendedStat> ES;
 	
 	if (C == None)
 		return;
@@ -56,7 +56,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	if (s.default.logLevel > globalLogLevel)
 		return;
 	
-	bDistanceStat = ClassIsChildOf(s, class'xStats_b1.statDistance');
+	bDistanceStat = ClassIsChildOf(s, class'statDistance');
 	
 	if (bDistanceStat)
 	{
@@ -83,10 +83,10 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		return;
 	}
 	
-	if (ClassIsChildOf(s, class'xStats_b1.xsExtendedStat'))
-		ES = class<xStats_b1.xsExtendedStat>(s);
+	if (ClassIsChildOf(s, class'xsExtendedStat'))
+		ES = class<xsExtendedStat>(s);
 	
-	//log(ClassIsChildOf(s, class'xStats_b1.xsExtendedStat'));
+	//log(ClassIsChildOf(s, class'xsExtendedStat'));
 	
 	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
 	{

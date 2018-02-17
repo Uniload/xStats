@@ -9,13 +9,13 @@ static function string GetPersonalString(
 	optional String OptionalString
 	)
 {
-	local class<xStats_b1.xsExtendedStat> s;
+	local class<xsExtendedStat> s;
 	local PlayerReplicationInfo PRI;
 	local int amount;
 
 	// Expect Related1 to be a stat (required)
 	// Expect Related2 to be a target PRI (optional)
-	s = class<xStats_b1.xsExtendedStat>(Related1);
+	s = class<xsExtendedStat>(Related1);
 	if (s == None)
 		return "";
 

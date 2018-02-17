@@ -113,40 +113,40 @@ simulated function setDefaultStatMessages()
 
 simulated function setStatMessages()
 {
-	class'xStats_b1.statDistance'.default.personalMessage = messageDistance;
-	class'xStats_b1.statDistanceSpinfusor'.default.personalMessage = messageDistanceSpinfusor;
-	class'xStats_b1.statDistanceSniper'.default.personalMessage = messageDistanceSniper;
-	class'xStats_b1.statMA'.default.personalMessage = messageSpinfusorMA;
-	class'xStats_b1.statMAPlus'.default.personalMessage = messageSpinfusorMAPlus;
-	class'xStats_b1.statMASupreme'.default.personalMessage = messageSpinfusorMASupreme;
-	class'xStats_b1.statEatDisc'.default.personalMessage = messageSpinfusorEatDisc;
-	class'xStats_b1.statOMG'.default.personalMessage = messageOMG;
-	class'xStats_b1.statSweetShot'.default.personalMessage = messageSweetShot;
-	class'xStats_b1.statPMA'.default.personalMessage = messageBurnerMA;
-	class'xStats_b1.statRocketeer'.default.personalMessage = messageRocketPodMA;
-	class'xStats_b1.statGLMA'.default.personalMessage = messageGrenadeLauncherMA;
-	class'xStats_b1.statEBMA'.default.personalMessage = messageBladeMa;
-	class'xStats_b1.statHS'.default.personalMessage = messageSniperHS;
-	class'xStats_b1.statMMA'.default.personalMessage = messageMortarMa;
+	class'statDistance'.default.personalMessage = messageDistance;
+	class'statDistanceSpinfusor'.default.personalMessage = messageDistanceSpinfusor;
+	class'statDistanceSniper'.default.personalMessage = messageDistanceSniper;
+	class'statMA'.default.personalMessage = messageSpinfusorMA;
+	class'statMAPlus'.default.personalMessage = messageSpinfusorMAPlus;
+	class'statMASupreme'.default.personalMessage = messageSpinfusorMASupreme;
+	class'statEatDisc'.default.personalMessage = messageSpinfusorEatDisc;
+	class'statOMG'.default.personalMessage = messageOMG;
+	class'statSweetShot'.default.personalMessage = messageSweetShot;
+	class'statPMA'.default.personalMessage = messageBurnerMA;
+	class'statRocketeer'.default.personalMessage = messageRocketPodMA;
+	class'statGLMA'.default.personalMessage = messageGrenadeLauncherMA;
+	class'statEBMA'.default.personalMessage = messageBladeMa;
+	class'statHS'.default.personalMessage = messageSniperHS;
+	class'statMMA'.default.personalMessage = messageMortarMa;
 }
 
 simulated function setTargetStatMessages()
 {
-	class'xStats_b1.statDistance'.default.targetMessage = messageTargetDistance;
-	class'xStats_b1.statDistanceSpinfusor'.default.targetMessage = messageTargetDistanceSpinfusor;
-	class'xStats_b1.statDistanceSniper'.default.targetMessage = messageTargetDistanceSniper;
-	class'xStats_b1.statMA'.default.targetMessage = messageTargetSpinfusorMA;
-	class'xStats_b1.statMAPlus'.default.targetMessage = messageTargetSpinfusorMAPlus;
-	class'xStats_b1.statMASupreme'.default.targetMessage = messageTargetSpinfusorMASupreme;
-	class'xStats_b1.statEatDisc'.default.targetMessage = messageTargetSpinfusorEatDisc;
-	class'xStats_b1.statOMG'.default.targetMessage = messageTargetOMG;
-	class'xStats_b1.statSweetShot'.default.targetMessage = messageTargetSweetShot;
-	class'xStats_b1.statPMA'.default.targetMessage = messageTargetBurnerMA;
-	class'xStats_b1.statRocketeer'.default.targetMessage = messageTargetRocketPodMA;
-	class'xStats_b1.statGLMA'.default.targetMessage = messageTargetGrenadeLauncherMA;
-	class'xStats_b1.statEBMA'.default.targetMessage = messageTargetBladeMa;
-	class'xStats_b1.statHS'.default.targetMessage = messageTargetSniperHS;
-	class'xStats_b1.statMMA'.default.targetMessage = messageTargetMortarMa;
+	class'statDistance'.default.targetMessage = messageTargetDistance;
+	class'statDistanceSpinfusor'.default.targetMessage = messageTargetDistanceSpinfusor;
+	class'statDistanceSniper'.default.targetMessage = messageTargetDistanceSniper;
+	class'statMA'.default.targetMessage = messageTargetSpinfusorMA;
+	class'statMAPlus'.default.targetMessage = messageTargetSpinfusorMAPlus;
+	class'statMASupreme'.default.targetMessage = messageTargetSpinfusorMASupreme;
+	class'statEatDisc'.default.targetMessage = messageTargetSpinfusorEatDisc;
+	class'statOMG'.default.targetMessage = messageTargetOMG;
+	class'statSweetShot'.default.targetMessage = messageTargetSweetShot;
+	class'statPMA'.default.targetMessage = messageTargetBurnerMA;
+	class'statRocketeer'.default.targetMessage = messageTargetRocketPodMA;
+	class'statGLMA'.default.targetMessage = messageTargetGrenadeLauncherMA;
+	class'statEBMA'.default.targetMessage = messageTargetBladeMa;
+	class'statHS'.default.targetMessage = messageTargetSniperHS;
+	class'statMMA'.default.targetMessage = messageTargetMortarMa;
 }
 
 defaultproperties

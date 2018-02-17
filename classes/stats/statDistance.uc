@@ -14,7 +14,7 @@ defaultproperties
 	Description="Longest midair"
 	awardDescription="Longest midair"
 	personalMessage="%1 units"
-	PersonalMessageClass=Class'xStats_b1.xsDistanceStatMessage'
+	PersonalMessageClass=Class'xsDistanceStatMessage'
 	
 	Server_minTargetAltitude		=	0
 	Server_minDistance				=	0
@@ -29,7 +29,7 @@ defaultproperties
 	Server_Acronym					=	"DMA"
 	Server_Description				=	"Longest hit"
 	Server_awardDescription			=	"Longest hit"
-	Server_PersonalMessageClass		=	Class'xStats_b1.xsDistanceStatMessage'
+	Server_PersonalMessageClass		=	Class'xsDistanceStatMessage'
 	
-	Server_targetMessageClass		=	class'xStats_b1.xsTargetDistanceStatMessage'
+	Server_targetMessageClass		=	class'xsTargetDistanceStatMessage'
 }

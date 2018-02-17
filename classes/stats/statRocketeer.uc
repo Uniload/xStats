@@ -30,5 +30,5 @@ defaultproperties
 	Server_Acronym					=	"R"
 	Server_Description				=	"Rocketeers"
 	Server_awardDescription			=	"The Rocketeer"
-	Server_PersonalMessageClass		=	Class'xStats_b1.xsNoScoreStatMessage'
+	Server_PersonalMessageClass		=	Class'xsNoScoreStatMessage'
 }

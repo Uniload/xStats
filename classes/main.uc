@@ -5,13 +5,13 @@ class main extends Gameplay.Mutator config(xStats);
  *	Thanks schlieperich for laying the first stone years before I even knew about tribes.
 **/
 
-const PACKAGE_NAME = "xStats_b1";
-const VERSION_NAME = "xStats_b1";
+const PACKAGE_NAME = "xStats_b2";
+const VERSION_NAME = "xStats_b2";
 
 var config int StatTrackerSpawnDelay;
 
-var private xStats_b1.ClientStats clientStatsClass;
-var private xStats_b1.StatSettings serverSettingsClass;
+var private ClientStats clientStatsClass;
+var private StatSettings serverSettingsClass;
 
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MAp_PDT;
@@ -62,8 +62,8 @@ simulated event PostBeginPlay()
 	
 	ServerSaveConfig();
 	
-	serverSettingsClass = spawn(class'xStats_b1.StatSettings');
-	clientStatsClass = spawn(class'xStats_b1.ClientStats');
+	serverSettingsClass = spawn(class'StatSettings');
+	clientStatsClass = spawn(class'ClientStats');
 	
 	ModifyStats();
 
@@ -76,11 +76,11 @@ simulated event PostBeginPlay()
  */
 function Timer()
 {	
-	local xStats_b1.xsStatTracker xsst;
+	local xsStatTracker xsst;
 	local Gameplay.StatTracker st;
 	
 	st = ModeInfo(Level.Game).Tracker;
-	xsst = Spawn(class'xStats_b1.xsStatTracker');
+	xsst = Spawn(class'xsStatTracker');
 	xsst.copy(st);
 	
 	ModeInfo(Level.Game).Tracker = xsst;
@@ -170,7 +170,7 @@ simulated function ModifyStats()
 		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
 		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
 		// This one is most likely useless.
-		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xStats_b1.xsExtendedStat';
+		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xsExtendedStat';
 		++statCount;		
 		
 		RegisterExtendedStat(M, stat_EBMA_PDT, Class'statEBMA');
@@ -256,7 +256,7 @@ defaultproperties
 	StatTrackerSpawnDelay	=		5
 
 	bAddToServerPackages	=		True
-	FriendlyName			=		"xStats_b1"
+	FriendlyName			=		"xStats"
 	Description				=		"Gameplay stat manager"
 	
 	RemoteRole				=		ROLE_Authority

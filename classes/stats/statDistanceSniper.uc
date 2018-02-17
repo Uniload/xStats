@@ -14,7 +14,7 @@ defaultproperties
 	Description="Longest sniper rifle shot"
 	awardDescription="Longest sniper rifle shot"
 	personalMessage="%1 units"
-	PersonalMessageClass=Class'xStats_b1.xsDistanceStatMessage'
+	PersonalMessageClass=Class'xsDistanceStatMessage'
 	
 	Server_minTargetAltitude		=	0
 	Server_minDistance				=	14000
@@ -29,7 +29,7 @@ defaultproperties
 	Server_Acronym					=	"DMAS"
 	Server_Description				=	"Longest sniper rifle shot"
 	Server_awardDescription			=	"Longest sniper rifle shot"
-	Server_PersonalMessageClass		=	Class'xStats_b1.xsDistanceStatMessage'
+	Server_PersonalMessageClass		=	Class'xsDistanceStatMessage'
 	
-	Server_targetMessageClass		=	class'xStats_b1.xsTargetDistanceStatMessage'
+	Server_targetMessageClass		=	class'xsTargetDistanceStatMessage'
 }
