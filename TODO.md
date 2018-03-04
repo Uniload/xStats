@@ -21,6 +21,7 @@
 
 # REQUIREMENTS V1+
 
+* FIX ENDGAME STATS
 * Implement teamkill / friendlyfire target message
 * Implement/fix default stats
   * Increase FlagAttacked / FlagDefended stat radius
