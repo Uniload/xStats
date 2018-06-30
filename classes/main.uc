@@ -8,8 +8,6 @@ class main extends Gameplay.Mutator config(xStats);
 const PACKAGE_NAME = "xStats_b2";
 const VERSION_NAME = "xStats_b2";
 
-var config int StatTrackerSpawnDelay;
-
 var private ClientStats clientStatsClass;
 var private StatSettings serverSettingsClass;
 
@@ -57,32 +55,45 @@ simulated event PostBeginPlay()
 	Super.PostBeginPlay();
 
 	log("*************" @ VERSION_NAME @ "*************");
-	log("StatTracker will spawn in " $ StatTrackerSpawnDelay $ " seconds...");
 	log("Startup...");
-	
+
 	ServerSaveConfig();
-	
+
 	serverSettingsClass = spawn(class'StatSettings');
 	clientStatsClass = spawn(class'ClientStats');
-	
+
 	ModifyStats();
 
 	serverSettingsClass.Initialize();
-	
-	SetTimer(StatTrackerSpawnDelay, False);
+}
+
+function Tick(float Delta)
+{
+  if(ModeInfo(Level.Game).Tracker != none)
+  {
+    if (ModeInfo(Level.Game).Tracker.IsA('xsStatTracker'))
+    {
+      Disable('Tick');
+      return;
+    }
+    else {
+      ModifyStatTrackerInstance();
+    }
+  }
+
 }
 
 /** Used to swap the default StatTracker class with xsStatTracker
  */
-function Timer()
-{	
-	local xsStatTracker xsst;
+function ModifyStatTrackerInstance()
+{
+  local xsStatTracker xsst;
 	local Gameplay.StatTracker st;
-	
+
 	st = ModeInfo(Level.Game).Tracker;
 	xsst = Spawn(class'xsStatTracker');
 	xsst.copy(st);
-	
+
 	ModeInfo(Level.Game).Tracker = xsst;
 	log("*************" @ VERSION_NAME @ "*************");
 	log(VERSION_NAME $ ": Startup completed.");
@@ -94,9 +105,9 @@ function AddServerPackage(string Package)
 {
 	local bool AddServerPackage;
 	local int i;
-	
+
 	AddServerPackage = true;
-	
+
 	for(i = 0; i < class'Engine.GameEngine'.default.ServerPackages.Length; ++i)
 	{
 		if (class'Engine.GameEngine'.default.ServerPackages[i] == Package)
@@ -105,7 +116,7 @@ function AddServerPackage(string Package)
 			break;
 		}
 	}
-	
+
 	if (AddServerPackage)
 	{
 		class'Engine.GameEngine'.default.ServerPackages[class'Engine.GameEngine'.default.ServerPackages.Length] = Package;
@@ -123,7 +134,7 @@ function AddServerPackage(string Package)
 simulated function RegisterExtendedStat(ModeInfo M, class<ProjectileDamageTypeDefault> PDT, class<xsExtendedStat> stat)
 {
 	local int index;
-	
+
 	if(stat != None && PDT != None)
 	{
 		index = M.extendedProjectileDamageStats.Length;
@@ -157,22 +168,22 @@ simulated function ModifyStats()
 			if(M.extendedProjectileDamageStats[i].damageTypeClass == stat_MA_PDT)
 			{
 				M.extendedProjectileDamageStats.Remove(i, 1);
-			}		
+			}
 		}
-		
+
 		statCount = M.projectileDamageStats.Length;
 		M.projectileDamageStats.Insert(statCount, 1);	// we have 1 new SIMPLE stats
 
 		log("Loading game stats:");
-		
+
 		// Head Shot
 		serverSettingsClass.addToStatList(Class'StatHS');
 		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
 		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
 		// This one is most likely useless.
 		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xsExtendedStat';
-		++statCount;		
-		
+		++statCount;
+
 		RegisterExtendedStat(M, stat_EBMA_PDT, Class'statEBMA');
 
 		RegisterExtendedStat(M, stat_MA_PDT, Class'statMA');
@@ -185,12 +196,12 @@ simulated function ModifyStats()
 
 		for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
 		{
-			//Only add one stat even if multiple PDT's trigger it 
+			//Only add one stat even if multiple PDT's trigger it
 			if (i==0)
 				RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], Class'statDistance');
 			else RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], None );
 		}
-			
+
 		RegisterExtendedStat(M, stat_MA_PDT, Class'statDistanceSpinfusor');
 
 		RegisterExtendedStat(M, stat_HS_PDT, Class'statDistanceSniper');
@@ -200,23 +211,23 @@ simulated function ModifyStats()
 		RegisterExtendedStat(M, stat_GLMA_PDT, Class'statGLMA');
 
 		RegisterExtendedStat(M, stat_MMA_PDT, Class'statMMA');
-		
+
 		for(i=0; i < stat_SS_PDT_LIST.Length ;i++)
 		{
 			if (i==0)
 				RegisterExtendedStat(M, stat_SS_PDT_LIST[i], Class'statSweetShot');
 			else RegisterExtendedStat(M, stat_SS_PDT_LIST[i], None );
 		}
-		
+
 		for(i=0; i < stat_OMG_PDT_LIST.Length;i++)
 		{
 			if (i==0)
 				RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], Class'statOMG');
 			RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], None );
 		}
-		
+
 		RegisterExtendedStat(M, stat_RPMA_PDT, Class'statRocketeer');
-		
+
 		//Server logging purposes
 		serverSettingsClass.notifyStatAmt();
 	}
@@ -245,19 +256,17 @@ defaultproperties
 	stat_MMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeMortar'
 	stat_PMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeBurner'
 	stat_RPMA_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeRocketPod'
-	
+
 	stat_OMG_PDT_LIST(0)	=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_SS_PDT_LIST(0)		=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
 	stat_Distance_PDT_LIST(0)= 		None
-	
+
 	clientStatsClass		=		None
 	serverSettingsClass		=		None
-	
-	StatTrackerSpawnDelay	=		5
 
 	bAddToServerPackages	=		True
 	FriendlyName			=		"xStats"
 	Description				=		"Gameplay stat manager"
-	
+
 	RemoteRole				=		ROLE_Authority
 }
