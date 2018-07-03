@@ -84,7 +84,6 @@ function Tick(float Delta)
       ModifyStatTrackerInstance();
     }
   }
-
 }
 
 /** Used to swap the default StatTracker class with xsStatTracker

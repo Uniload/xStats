@@ -62,6 +62,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	{
 		if (target != None)
 		{
+			// TODO calculate relativeDistance at projectile spawn rather than when it hits
 			relativeDistance = VSize(C.Pawn.Location - Target.Pawn.Location);
 			value = (relativeDistance*0.0125);
 		}
@@ -85,8 +86,6 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 
 	if (ClassIsChildOf(s, class'xsExtendedStat'))
 		ES = class<xsExtendedStat>(s);
-
-	//log(ClassIsChildOf(s, class'xsExtendedStat'));
 
 	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
 	{

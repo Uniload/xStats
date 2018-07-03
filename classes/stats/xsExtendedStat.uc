@@ -22,19 +22,41 @@ var config string Server_Description;
 var config string Server_awardDescription;
 var config class<MPPersonalMessage> Server_PersonalMessageClass;
 
+/**
+ * Check if received damage is not enough to award a stat.
+ * Checks for groundshots awarding midair when splash kills target
+ * Takes shieldpack modifier into account
+ */
+static function bool failsDamageCheck(Controller Target, float damageAmount)
+{
+	local PlayerCharacterController pcc;
+	local float damageMultiplier;
+	local ShieldPack sP;
+
+	pcc = PlayerCharacterController(Target);
+	if(ClassIsChildOf(pcc.Character.Pack.Class, class'Gameplay.ShieldPack'))
+	{
+		sP = ShieldPack(pcc.Character.Pack);
+		if (pcc.Character.Pack.IsInState(Name("Active")))
+			damageMultiplier = sP.activeFractionDamageBlocked;
+		else
+			damageMultiplier = sP.passiveFractionDamageBlocked;
+	}
+	return (damageAmount < (default.minDamage - default.minDamage * damageMultiplier)
+		&& (damageAmount - Target.Pawn.Health) < (default.minDamage - default.minDamage * damageMultiplier));
+}
+
 static function bool isEligible(Controller Source, Controller Target, float damageAmount)
 {
 	local vector hitLocation, hitNormal, startTrace, endTrace;
 	local int relativeDistance;
 	local Character targetCharacter;
-	//local PlayerController pc;
 	local PlayerCharacterController pcc;
-	
+
 	if (Target == None || Source == None)
 		return false;
 
-	// Damage check, but only if target is alive
-	if (Target.Pawn.IsAlive() && damageAmount < default.minDamage)
+	if (failsDamageCheck(Target, damageAmount))
 		return false;
 
 	// Vehicle/turret check
@@ -66,9 +88,9 @@ static function bool isEligible(Controller Source, Controller Target, float dama
 	// Maximum target speed check
 	if (default.maxTargetSpeed != 0 && targetCharacter.movementSpeed >= default.maxTargetSpeed)
 		return false;
-		
+
 	// If this point is reached, all tests passed and the stat is awarded
-	
+
 	return true;
 }
 
