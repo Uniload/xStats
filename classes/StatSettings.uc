@@ -43,9 +43,9 @@ function bool addToStatList(class<xsExtendedStat> customStat)
 {
 	if (customStat == None || (statListSize-1) > STATLIST_MAX_SIZE)
 		return False;
-	
-	log(customStat.default.statName);
-	
+
+	log(customStat.default.statName, class'main'.static.getLogName());
+
 	statList[statListSize] = customStat;
 	statListSize += 1;
 	return True;
@@ -53,7 +53,7 @@ function bool addToStatList(class<xsExtendedStat> customStat)
 
 simulated function notifyStatAmt()
 {
-	log("Loaded" @ statListSize @ "out of MAX" @ STATLIST_MAX_SIZE @ "stats");
+	log("Loaded" @ statListSize @ "out of MAX" @ STATLIST_MAX_SIZE @ "stats", class'main'.static.getLogName());
 }
 
 simulated function SetStatSettings()
@@ -64,12 +64,12 @@ simulated function SetStatSettings()
 	class'xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xsNoScoreStatMessage';
 
-	
+
 	for(i = 0; i < ArrayCount(statList); ++i)
 	{
 		xsc = statList[i];
 		if (xsc != None)
-		{		
+		{
 			xsc.default.minTargetAltitude = xsc.default.Server_minTargetAltitude;
 			xsc.default.minDistance = xsc.default.Server_minDistance;
 			xsc.default.MaxDistance = xsc.default.Server_MaxDistance;

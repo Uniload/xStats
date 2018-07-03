@@ -36,6 +36,11 @@ replication
         clientStatsClass, serverSettingsClass;
 }
 
+static function Name getLogName()
+{
+  return Name("xStats_b2");
+}
+
 /**	Save/load this classes config variables on the server
  */
 function ServerSaveConfig()
@@ -54,8 +59,7 @@ simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
 
-	log("*************" @ VERSION_NAME @ "*************");
-	log("Startup...");
+	log("Startup...", class'main'.static.getLogName());
 
 	ServerSaveConfig();
 
@@ -95,8 +99,7 @@ function ModifyStatTrackerInstance()
 	xsst.copy(st);
 
 	ModeInfo(Level.Game).Tracker = xsst;
-	log("*************" @ VERSION_NAME @ "*************");
-	log(VERSION_NAME $ ": Startup completed.");
+	log("Startup completed.", class'main'.static.getLogName());
 }
 
 /**	From Antics_v1. Check ServerPackages for a specific package. If missing, this will add the package to the list and stop the server.
@@ -121,7 +124,7 @@ function AddServerPackage(string Package)
 	{
 		class'Engine.GameEngine'.default.ServerPackages[class'Engine.GameEngine'.default.ServerPackages.Length] = Package;
 		class'Engine.GameEngine'.static.StaticSaveConfig();
-		log(VERSION_NAME $ " Added a server package '" $ Package $ "'. Server requires a restart for setup to complete!");
+		log("Added a server package '" $ Package $ "'. Server requires a restart for setup to complete!", class'main'.static.getLogName());
 		ConsoleCommand("Exit");
 	}
 }
@@ -174,7 +177,7 @@ simulated function ModifyStats()
 		statCount = M.projectileDamageStats.Length;
 		M.projectileDamageStats.Insert(statCount, 1);	// we have 1 new SIMPLE stats
 
-		log("Loading game stats:");
+		log("Loading game stats:", class'main'.static.getLogName());
 
 		// Head Shot
 		serverSettingsClass.addToStatList(Class'StatHS');

@@ -62,12 +62,12 @@ var config string messageDestorySensor;
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	
-	if(Level.NetMode != NM_Client)
+
+	//if(Level.NetMode != NM_Client)
 		Disable('Tick');
-	
+
 	ClientSaveConfig();
-	
+
 	setDefaultStatMessages();
 	setStatMessages();
 	setTargetStatMessages();
@@ -75,8 +75,7 @@ simulated event PostBeginPlay()
 
 event Tick(float DeltaTime)
 {
-	log(DeltaTime);
-    setDefaultStatMessages();
+  setDefaultStatMessages();
 	setStatMessages();
 	setTargetStatMessages();
 }
@@ -106,7 +105,7 @@ simulated function setDefaultStatMessages()
 	class'StatClasses.StatRepairGenerator'.default.personalMessage = messageRepairGenerator;
 	class'StatClasses.StatRepairSensor'.default.personalMessage = messageRepairSensor;
 	class'StatClasses.StatRepairInventory'.default.personalMessage = messageRepairInventory;
-	class'StatClasses.StatDestroyGenerator'.default.personalMessage = messageDestoryGenerator;	
+	class'StatClasses.StatDestroyGenerator'.default.personalMessage = messageDestoryGenerator;
 	class'StatClasses.StatDestroySensor'.default.personalMessage = messageDestorySensor;
 	class'StatClasses.flagPickupStat'.default.personalMessage = messageFlagPickup;
 }
@@ -169,7 +168,7 @@ defaultproperties
 	messageRepairInventory	=		"You repaired an inventory station"
 	messageDestoryGenerator	=		"You destroyed their generator"
 	messageDestorySensor	=		"You destroyed their sensor"
-	
+
 	messageDistanceSpinfusor=		"%1 meters"
 	messageDistanceSniper	=		"%1 meters"
 	messageDistance			=		"%1 meters"
@@ -201,7 +200,7 @@ defaultproperties
 	messageTargetMortarMa			=		"Mortar MA by %1"
 	messageTargetBladeMa			=		"knifed by %1"
 	messageTargetSniperHS			=		"Head Shot by %1"
-	
+
 	bNetNotify				=		True
 	NetUpdateFrequency		=		1
 	bStatic					=		False

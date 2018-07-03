@@ -23,7 +23,7 @@ function setStat(Controller c, class<Stat> s, int value)
 	local TribesReplicationInfo TRI;
 
 	TRI = TribesReplicationInfo(C.PlayerReplicationInfo);
-	
+
 	if (TRI == None)
 		return;
 	if (s == class'StatClasses.StatHighestSpeed')
@@ -45,7 +45,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	local int relativeDistance;
 	local bool bDistanceStat;
 	local class<xsExtendedStat> ES;
-	
+
 	if (C == None)
 		return;
 	PC = PlayerController(C);
@@ -55,9 +55,9 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		return;
 	if (s.default.logLevel > globalLogLevel)
 		return;
-	
+
 	bDistanceStat = ClassIsChildOf(s, class'statDistance');
-	
+
 	if (bDistanceStat)
 	{
 		if (target != None)
@@ -69,25 +69,25 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	{
 		value = 1;
 	}
-	
+
 	TRI = TribesReplicationInfo(PC.PlayerReplicationInfo);
 
 	if (TRI == None)
 		return;
 
 	sd = TRI.getStatData(s);
-	
+
 	if (sd == None)
 	{
-		Log("STATTRACKER warning:  An unregistered stat was awarded ("$s$")");
+		Log("An unregistered stat was awarded ("$s$")", class'main'.static.getLogName());
 		return;
 	}
-	
+
 	if (ClassIsChildOf(s, class'xsExtendedStat'))
 		ES = class<xsExtendedStat>(s);
-	
+
 	//log(ClassIsChildOf(s, class'xsExtendedStat'));
-	
+
 	if (s.default.personalMessage != "" && s.default.personalMessageClass != None)
 	{
 		if (!bDistanceStat)
@@ -123,7 +123,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 			}
 		}
 	}
-	
+
 	// Set a timestamp
 	// This ensures that all serializers will report the stat being awarded
 	// at the same time.  It also allows this to be used to display times if
@@ -132,11 +132,11 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 	sd.lastAwardTimestamp = Level.TimeSeconds;
 
 	//Custom score system for distance stat.
-	
+
 	if (!bDistanceStat)
 	{
 		sd.amount = sd.amount + value;
-	
+
 		// Also award offense, defense and style points
 		TRI.offenseScore += sd.statClass.default.offensePointsPerStat * value;
 		TRI.defenseScore += sd.statClass.default.defensePointsPerStat * value;
@@ -147,7 +147,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		TRI.Score += sd.statClass.default.offensePointsPerStat * value;
 		TRI.Score += sd.statClass.default.defensePointsPerStat * value;
 		TRI.Score += sd.statClass.default.stylePointsPerStat * value;
-	} else 
+	} else
 	{
 		if (sd.amount < value)
 		{
@@ -156,7 +156,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 			TRI.offenseScore += sd.statClass.default.offensePointsPerStat;
 			TRI.defenseScore += sd.statClass.default.defensePointsPerStat;
 			TRI.styleScore += sd.statClass.default.stylePointsPerStat;
-			
+
 			TRI.Score += sd.statClass.default.offensePointsPerStat;
 			TRI.Score += sd.statClass.default.defensePointsPerStat;
 			TRI.Score += sd.statClass.default.stylePointsPerStat;
