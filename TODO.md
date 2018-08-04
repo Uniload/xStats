@@ -28,7 +28,6 @@
   * Fix BB stat
   * ...
 * Flag cap time stat
-* Stop MA stats from being awarded when a groundhit splashes and kills a low HP target in the air.
-> Need to override logic outside of ModeInfo. Perhaps more suited to a mutator like promod/tmod to avoid compatibility issues.
 * Dynamic stat generation with stat template?
 * ingame UI for client stat customisation (tvbp_b7 style)
+* award stats when they occur after being killed?
