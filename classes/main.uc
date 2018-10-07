@@ -90,7 +90,7 @@ function Tick(float Delta)
  */
 function ModifyStatTrackerInstance()
 {
-  local xsStatTracker xsst;
+ 	local xsStatTracker xsst;
 	local Gameplay.StatTracker st;
 
 	st = ModeInfo(Level.Game).Tracker;
@@ -266,7 +266,7 @@ defaultproperties
 	clientStatsClass		=		None
 	serverSettingsClass		=		None
 
-	bAddToServerPackages	=		True
+	bAddToServerPackages	=		true
 	FriendlyName			=		"xStats"
 	Description				=		"Gameplay stat manager"
 
