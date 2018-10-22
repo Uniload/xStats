@@ -63,6 +63,7 @@ function awardStat(Controller C, Class<Stat> s, optional Controller Target, opti
 		if (target != None)
 		{
 			// TODO calculate relativeDistance at projectile spawn rather than when it hits
+			// Alternative would be to calculate distance based on projetile lifespan && velocity at moment of impact
 			relativeDistance = VSize(C.Pawn.Location - Target.Pawn.Location);
 			value = (relativeDistance*0.0125);
 		}
