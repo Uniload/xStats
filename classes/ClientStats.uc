@@ -87,8 +87,9 @@ simulated function ClientSaveConfig()
  */
 event Timer()
 {
-	// if ENDGAME && client=>
-	RemoveUnawardedStats();
+	// TODO Does client know Level.Game ???
+	if (MultiplayerGameInfo(Level.Game).bOnGameEndCalled && Level.NetMode == NW_Client)
+		RemoveUnawardedStats();
 }
 
 /** Make client clear the unawarded stats themselves,
