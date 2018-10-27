@@ -11,6 +11,8 @@ const VERSION_NAME = "xStats_b2";
 var private ClientStats clientStatsClass;
 var private StatSettings serverSettingsClass;
 
+var config bool removeStats;
+
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MAp_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MApp_PDT;
@@ -69,6 +71,40 @@ simulated event PostBeginPlay()
 	ModifyStats();
 
 	serverSettingsClass.Initialize();
+
+	SetTimer(1, True);
+}
+
+/** Check for endgame
+*	Client cannot call "MultiplayerGameInfo(Level.Game).bOnGameEndCalled"
+*/
+simulated event Timer()
+{
+	if (MultiplayerGameInfo(Level.Game).bOnGameEndCalled && removeStats) {
+		removeStats = false;
+		RemoveNullStats();
+	}
+}
+
+simulated function RemoveNullStats()
+{
+	local int i;
+	local Controller CTRL;
+	local PlayerCharacterController PCC;
+	local TribesReplicationInfo TRI;
+
+	for(CTRL = Level.ControllerList; CTRL != None; CTRL = CTRL.NextController)
+	{
+		PCC = PlayerCharacterController(CTRL);
+		TRI = TribesReplicationInfo(PCC.playerReplicationInfo);
+		for (i=0; i < TRI.statDataList.Length; ++i)
+		{
+			if (TRI.statDataList[i].amount == 0)
+			{
+				TRI.statDataList[i].statClass = class'statEmpty';
+			}
+		}
+	}
 }
 
 function Tick(float Delta)
@@ -248,6 +284,7 @@ simulated event Destroyed()
 
 defaultproperties
 {
+	removeStats				=		true
 	stat_MA_PDT 			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_MAp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_MApp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'

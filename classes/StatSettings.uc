@@ -30,6 +30,7 @@ simulated event PostBeginPlay()
  */
 simulated event PostNetReceive()
 {
+	super.PostNetReceive();
 	SetStatSettings();
 }
 

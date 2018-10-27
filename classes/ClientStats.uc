@@ -1,9 +1,5 @@
 class ClientStats extends Engine.Actor config(xStats);
 
-//var private bool bInduceReplication;
-
-var config bool removeUnawardedStats;
-
 var config string messageDistance;
 var config string messageDistanceSpinfusor;
 var config string messageDistanceSniper;
@@ -61,6 +57,9 @@ var config string messageDestorySensor;
 
 // ============================================
 
+/**
+ * Somehow, this function is repeatedly called every 5or so seconds
+ */
 simulated event PostBeginPlay()
 {
 	Super.PostBeginPlay();
@@ -68,9 +67,6 @@ simulated event PostBeginPlay()
 	Disable('Tick');
 
 	ClientSaveConfig();
-
-	if (removeUnawardedStats)
-		SetTimer(1, true);
 
 	setDefaultStatMessages();
 	setStatMessages();
@@ -81,38 +77,6 @@ simulated function ClientSaveConfig()
 {
 	if (Level.NetMode == NM_Client)
 		SaveConfig();
-}
-
-/** Check for endgame
- */
-event Timer()
-{
-	// TODO Does client know Level.Game ???
-	if (MultiplayerGameInfo(Level.Game).bOnGameEndCalled && Level.NetMode == NW_Client)
-		RemoveUnawardedStats();
-}
-
-/** Make client clear the unawarded stats themselves,
- *  changes on the server wont be replicated in time before the "end game summary screen" (EGSC) anyway.
- *  This can be done by replacing the non-awarded stat with a stat class that
- *	doesnt have a description set, because those are ignored on the EGSC by default.
- *
- *	No idea how to make sure this will be called before the EGSC generation though...
- */
-simulated function RemoveUnawardedStats()
-{
-	local int i;
-	local tribesReplicationInfo TRI;
-
-	TRI = tribesReplicationInfo(PlayerOwner().playerReplicationInfo);
-
-	for (i=0; i < TRI.statDataList.Length; ++i)
-	{
-		if (TRI.statDataList[i].amount == 0)
-		{
-			TRI.statDataList[i] = spawn(class'statEmpty');
-		}
-	}
 }
 
 simulated function setDefaultStatMessages()
@@ -179,8 +143,6 @@ simulated function setTargetStatMessages()
 
 defaultproperties
 {
-	removeUnawardedStats	=		true
-
 	messageKill				=		"You killed %1"
 	messageTeamKill			=		"You teamkilled %1"
 	messageFlagPickup		=		"You grabbed the enemy flag"
