@@ -8,8 +8,8 @@ class main extends Gameplay.Mutator config(xStats);
 const PACKAGE_NAME = "xStats_b2";
 const VERSION_NAME = "xStats_b2";
 
-var private ClientStats clientStatsClass;
-var private StatSettings serverSettingsClass;
+var private ClientStats clientStatsInstance;
+var private StatSettings serverSettingsInstance;
 
 var config bool removeStats;
 
@@ -35,7 +35,7 @@ var config Array<class<EquipmentClasses.ProjectileDamageTypeDefault> > stat_Dist
 replication
 {
     reliable if (bNetInitial)
-        clientStatsClass, serverSettingsClass;
+        clientStatsInstance, serverSettingsInstance;
 }
 
 static function Name getLogName()
@@ -65,12 +65,12 @@ simulated event PostBeginPlay()
 
 	ServerSaveConfig();
 
-	serverSettingsClass = spawn(class'StatSettings');
-	clientStatsClass = spawn(class'ClientStats');
+	serverSettingsInstance = spawn(class'StatSettings');
+	clientStatsInstance = spawn(class'ClientStats');
 
 	ModifyStats();
 
-	serverSettingsClass.Initialize();
+	serverSettingsInstance.Initialize();
 
 	SetTimer(1, True);
 }
@@ -177,7 +177,7 @@ simulated function RegisterExtendedStat(ModeInfo M, class<ProjectileDamageTypeDe
 	{
 		index = M.extendedProjectileDamageStats.Length;
 		M.extendedProjectileDamageStats.Insert(index, 1);
-		serverSettingsClass.addToStatList(stat);
+		serverSettingsInstance.addToStatList(stat);
 		M.extendedProjectileDamageStats[index].damageTypeClass = PDT;
 		M.extendedProjectileDamageStats[index].extendedStatClass = stat;
 	}
@@ -190,7 +190,7 @@ simulated function ModifyStats()
 
 	M = ModeInfo(Level.Game);
 
-	if(M != None && serverSettingsClass != None)
+	if(M != None && serverSettingsInstance != None)
 	{
 		for(i = 0; i < M.projectileDamageStats.Length; ++i)
 		{
@@ -215,7 +215,7 @@ simulated function ModifyStats()
 		log("Loading game stats:", class'main'.static.getLogName());
 
 		// Head Shot
-		serverSettingsClass.addToStatList(Class'StatHS');
+		serverSettingsInstance.addToStatList(Class'StatHS');
 		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
 		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
 		// This one is most likely useless.
@@ -267,7 +267,7 @@ simulated function ModifyStats()
 		RegisterExtendedStat(M, stat_RPMA_PDT, Class'statRocketeer');
 
 		//Server logging purposes
-		serverSettingsClass.notifyStatAmt();
+		serverSettingsInstance.notifyStatAmt();
 	}
 }
 
@@ -275,8 +275,8 @@ simulated function ModifyStats()
  */
 simulated event Destroyed()
 {
-	clientStatsClass = None;
-	serverSettingsClass = None;
+	clientStatsInstance = None;
+	serverSettingsInstance = None;
 	Self.Destroy();
 }
 
@@ -300,8 +300,8 @@ defaultproperties
 	stat_SS_PDT_LIST(0)		=		Class'EquipmentClasses.ProjectileDamageTypeGrenadeLauncher'
 	stat_Distance_PDT_LIST(0)= 		None
 
-	clientStatsClass		=		None
-	serverSettingsClass		=		None
+	clientStatsInstance		=		None
+	serverSettingsInstance		=		None
 
 	bAddToServerPackages	=		true
 	FriendlyName			=		"xStats"
