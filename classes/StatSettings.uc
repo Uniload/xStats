@@ -65,7 +65,6 @@ simulated function SetStatSettings()
 	class'xsStatTracker'.default.sustainedSpeedCap = sustainedSpeedCap;
 	class'StatClasses.flagPickupStat'.default.PersonalMessageClass = Class'xsNoScoreStatMessage';
 
-
 	for(i = 0; i < ArrayCount(statList); ++i)
 	{
 		xsc = statList[i];

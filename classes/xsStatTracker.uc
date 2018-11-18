@@ -1,4 +1,4 @@
-class xsStatTracker extends Gameplay.StatTracker config;
+class xsStatTracker extends Gameplay.StatTracker;
 
 var int sustainedSpeedCap;
 var private float timeLastDistanceStat;

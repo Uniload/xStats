@@ -5,8 +5,8 @@ class main extends Gameplay.Mutator config(xStats);
  *	Thanks schlieperich for laying the first stone years before I even knew about tribes.
 **/
 
-const PACKAGE_NAME = "xStats_b2";
-const VERSION_NAME = "xStats_b2";
+const PACKAGE_NAME = "xStats_b3";
+const VERSION_NAME = "xStats_b3";
 
 var private ClientStats clientStatsInstance;
 var private StatSettings serverSettingsInstance;
@@ -40,7 +40,7 @@ replication
 
 static function Name getLogName()
 {
-  return Name("xStats_b2");
+  return Name("xStats_b3");
 }
 
 /**	Save/load this classes config variables on the server
@@ -301,7 +301,7 @@ defaultproperties
 	stat_Distance_PDT_LIST(0)= 		None
 
 	clientStatsInstance		=		None
-	serverSettingsInstance		=		None
+	serverSettingsInstance	=		None
 
 	bAddToServerPackages	=		true
 	FriendlyName			=		"xStats"
