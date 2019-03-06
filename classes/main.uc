@@ -11,8 +11,6 @@ const VERSION_NAME = "xStats_b3";
 var private ClientStats clientStatsInstance;
 var private StatSettings serverSettingsInstance;
 
-var config bool removeStats;
-
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MA_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MAp_PDT;
 var config class<EquipmentClasses.ProjectileDamageTypeDefault> stat_MApp_PDT;
@@ -71,40 +69,6 @@ simulated event PostBeginPlay()
 	ModifyStats();
 
 	serverSettingsInstance.Initialize();
-
-	SetTimer(1, True);
-}
-
-/** Check for endgame
-*	Client cannot call "MultiplayerGameInfo(Level.Game).bOnGameEndCalled"
-*/
-simulated event Timer()
-{
-	if (MultiplayerGameInfo(Level.Game).bOnGameEndCalled && removeStats) {
-		removeStats = false;
-		RemoveNullStats();
-	}
-}
-
-simulated function RemoveNullStats()
-{
-	local int i;
-	local Controller CTRL;
-	local PlayerCharacterController PCC;
-	local TribesReplicationInfo TRI;
-
-	for(CTRL = Level.ControllerList; CTRL != None; CTRL = CTRL.NextController)
-	{
-		PCC = PlayerCharacterController(CTRL);
-		TRI = TribesReplicationInfo(PCC.playerReplicationInfo);
-		for (i=0; i < TRI.statDataList.Length; ++i)
-		{
-			if (TRI.statDataList[i].amount == 0)
-			{
-				TRI.statDataList[i].statClass = class'statEmpty';
-			}
-		}
-	}
 }
 
 function Tick(float Delta)
@@ -209,62 +173,66 @@ simulated function ModifyStats()
 			}
 		}
 
-		statCount = M.projectileDamageStats.Length;
-		M.projectileDamageStats.Insert(statCount, 1);	// we have 1 new SIMPLE stats
-
 		log("Loading game stats:", class'main'.static.getLogName());
 
-		// Head Shot
-		serverSettingsInstance.addToStatList(Class'StatHS');
-		M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
-		M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
-		// This one is most likely useless.
-		M.projectileDamageStats[statCount].playerDamageStatClass = Class'xsExtendedStat';
-		++statCount;
-
-		RegisterExtendedStat(M, stat_EBMA_PDT, Class'statEBMA');
-
-		RegisterExtendedStat(M, stat_MA_PDT, Class'statMA');
-
-		RegisterExtendedStat(M, stat_MAp_PDT, Class'statMAPlus');
-
-		RegisterExtendedStat(M, stat_MApp_PDT, Class'statMASupreme');
-
-		RegisterExtendedStat(M, stat_ED_PDT, Class'statEatDisc');
-
-		for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
+		if (stat_EBMA_PDT != None)
 		{
-			//Only add one stat even if multiple PDT's trigger it
-			if (i==0)
-				RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], Class'statDistance');
-			else RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], None );
+			statCount = M.projectileDamageStats.Length;
+			M.projectileDamageStats.Insert(statCount, 1);	// we have 1 new SIMPLE stats
+
+			// Head Shot
+			serverSettingsInstance.addToStatList(Class'StatHS');
+			M.projectileDamageStats[statCount].damageTypeClass = stat_HS_PDT;
+			M.projectileDamageStats[statCount].headShotStatClass = Class'StatHS';
+			// This one is most likely useless.
+			M.projectileDamageStats[statCount].playerDamageStatClass = Class'xsExtendedStat';
+			++statCount;
 		}
 
-		RegisterExtendedStat(M, stat_MA_PDT, Class'statDistanceSpinfusor');
-
-		RegisterExtendedStat(M, stat_HS_PDT, Class'statDistanceSniper');
-
-		RegisterExtendedStat(M, stat_PMA_PDT, Class'statPMA');
-
-		RegisterExtendedStat(M, stat_GLMA_PDT, Class'statGLMA');
-
-		RegisterExtendedStat(M, stat_MMA_PDT, Class'statMMA');
-
-		for(i=0; i < stat_SS_PDT_LIST.Length ;i++)
-		{
-			if (i==0)
-				RegisterExtendedStat(M, stat_SS_PDT_LIST[i], Class'statSweetShot');
-			else RegisterExtendedStat(M, stat_SS_PDT_LIST[i], None );
-		}
-
-		for(i=0; i < stat_OMG_PDT_LIST.Length;i++)
-		{
-			if (i==0)
-				RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], Class'statOMG');
-			RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], None );
-		}
-
-		RegisterExtendedStat(M, stat_RPMA_PDT, Class'statRocketeer');
+		if (stat_EBMA_PDT != None)
+			RegisterExtendedStat(M, stat_EBMA_PDT, Class'statEBMA');
+		if (stat_MA_PDT != None)
+			RegisterExtendedStat(M, stat_MA_PDT, Class'statMA');
+		if (stat_MAp_PDT != None)
+			RegisterExtendedStat(M, stat_MAp_PDT, Class'statMAPlus');
+		if (stat_MApp_PDT != None)
+			RegisterExtendedStat(M, stat_MApp_PDT, Class'statMASupreme');
+		if (stat_ED_PDT != None)
+			RegisterExtendedStat(M, stat_ED_PDT, Class'statEatDisc');
+		if (stat_Distance_PDT_LIST.length != 0)
+			for(i=0; i < stat_Distance_PDT_LIST.Length;i++)
+			{
+				//Only add one stat even if multiple PDT's trigger it
+				if (i==0)
+					RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], Class'statDistance');
+				else RegisterExtendedStat(M, stat_Distance_PDT_LIST[i], None );
+			}
+		if (stat_MA_PDT != None)
+			RegisterExtendedStat(M, stat_MA_PDT, Class'statDistanceSpinfusor');
+		if (stat_HS_PDT != None)
+			RegisterExtendedStat(M, stat_HS_PDT, Class'statDistanceSniper');
+		if (stat_PMA_PDT != None)
+			RegisterExtendedStat(M, stat_PMA_PDT, Class'statPMA');
+		if (stat_GLMA_PDT != None)
+			RegisterExtendedStat(M, stat_GLMA_PDT, Class'statGLMA');
+		if (stat_MMA_PDT != None)
+			RegisterExtendedStat(M, stat_MMA_PDT, Class'statMMA');
+		if (stat_SS_PDT_LIST.length != 0)
+			for(i=0; i < stat_SS_PDT_LIST.Length ;i++)
+			{
+				if (i==0)
+					RegisterExtendedStat(M, stat_SS_PDT_LIST[i], Class'statSweetShot');
+				else RegisterExtendedStat(M, stat_SS_PDT_LIST[i], None );
+			}
+		if (stat_OMG_PDT_LIST.length != 0)
+			for(i=0; i < stat_OMG_PDT_LIST.Length;i++)
+			{
+				if (i==0)
+					RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], Class'statOMG');
+				RegisterExtendedStat(M, stat_OMG_PDT_LIST[i], None );
+			}
+		if (stat_RPMA_PDT != None)
+			RegisterExtendedStat(M, stat_RPMA_PDT, Class'statRocketeer');
 
 		//Server logging purposes
 		serverSettingsInstance.notifyStatAmt();
@@ -284,7 +252,6 @@ simulated event Destroyed()
 
 defaultproperties
 {
-	removeStats				=		true
 	stat_MA_PDT 			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_MAp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
 	stat_MApp_PDT			=		Class'EquipmentClasses.ProjectileDamageTypeSpinfusor'
